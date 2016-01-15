@@ -1,0 +1,19 @@
+{
+  "name": "go-debug",
+  "main": "./lib/main",
+  "version": "0.0.0",
+  "description": "go debugger using delve for atom",
+  "keywords": ["go", "debug", "debugger", "delve", "dlv"],
+  "repository": "https://github.com/lloiser/go-debug",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "interact.js": "^1.2.6",
+    "json-rpc2": "^1.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^1.10.3"
+  }
+}

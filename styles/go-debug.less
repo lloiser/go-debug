@@ -1,0 +1,97 @@
+// The ui-variables file is provided by base themes provided by Atom.
+//
+// See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
+// for a full listing of what's available.
+@import "ui-variables";
+
+@go-debug-debug-line-color-bg: rgba(64, 115, 255, 0.5);
+@go-debug-breakpoint-size: 0.8em;
+
+atom-text-editor::shadow {
+	.go-debug-gutter-breakpoint {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		color: red;
+	}
+	.go-debug-gutter-breakpoint > * {
+		height: @go-debug-breakpoint-size !important;
+		width: @go-debug-breakpoint-size;
+		border-radius: 50%;
+		border: 1px solid currentColor;
+	}
+	.go-debug-gutter-breakpoint > .active {
+		background-color: currentColor;
+	}
+
+	.go-debug-debug-line {
+		background: @go-debug-debug-line-color-bg;
+	}
+}
+
+.go-debug-panel {
+	display: flex;
+	background-color: @base-background-color;
+	border: 1px solid @pane-item-border-color;
+	height: 125px;
+
+	> * {
+		padding: 5px;
+
+		&:not(:last-child) {
+			border-right: 1px solid @pane-item-border-color;
+		}
+	}
+}
+
+.go-debug-panel-commands {
+	flex-shrink: 0;
+
+	> * {
+		display: block;
+	}
+}
+
+.go-debug-panel-stacktrace {
+	flex: 0 0 175px;
+}
+
+.go-debug-panel-stacktrace-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		cursor: pointer;
+	}
+	.active {
+		font-weight: bold;
+	}
+}
+
+.go-debug-panel-variables {
+	flex: 1;
+	overflow: auto;
+	white-space: pre;
+
+	ol {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+
+		ol {
+			display: none;
+			padding-left: 10px;
+
+			&.expanded {
+				display: block;
+			}
+		}
+	}
+	.expander {
+		display: inline-block;
+		padding: 0 5px;
+		cursor: pointer;
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"atom-workspace": {
+		"f5": "go-debug:run",
+		"shift-f5": "go-debug:restart",
+		"f8": "go-debug:continue",
+		"f10": "go-debug:next",
+		"f11": "go-debug:step"
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"extends": "eslint:recommended",
+	"rules": {
+		"camelcase": [1, { "properties": "always" }],
+		"consistent-return": 2,
+		"eqeqeq": 2,
+		"indent": [2, "tab"],
+		"linebreak-style": [2, "unix"],
+		"new-cap": 2,
+		"no-extra-parens": [2, "functions"],
+		"no-new-wrappers": 2,
+		"no-this-before-super": 2,
+		"no-use-before-define": [2, "nofunc"],
+		"prefer-const": 1,
+		"quotes": [1, "double"],
+		"semi": [2, "always"],
+		"strict": [2, "never"]
+	},
+
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+
+	"ecmaFeatures": {
+		"modules": true
+	},
+
+	"globals": {
+		"atom": true
+	}
+}
