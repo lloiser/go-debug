@@ -34,7 +34,7 @@ atom-text-editor::shadow {
 	display: flex;
 	background-color: @base-background-color;
 	border: 1px solid @pane-item-border-color;
-	height: 125px;
+	min-height: 8.6em;
 
 	> * {
 		padding: 5px;
@@ -48,8 +48,14 @@ atom-text-editor::shadow {
 .go-debug-panel-commands {
 	flex-shrink: 0;
 
-	> * {
+	> .btn-group {
 		display: block;
+		overflow: hidden;
+		margin-bottom: 5px;
+
+		> button {
+			width: 5em;
+		}
 	}
 }
 
