@@ -1,9 +1,15 @@
 {
   "name": "go-debug",
   "main": "./lib/main",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "go debugger using delve for atom",
-  "keywords": ["go", "debug", "debugger", "delve", "dlv"],
+  "keywords": [
+    "go",
+    "debug",
+    "debugger",
+    "delve",
+    "dlv"
+  ],
   "repository": "https://github.com/lloiser/go-debug",
   "license": "MIT",
   "engines": {
