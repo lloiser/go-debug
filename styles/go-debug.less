@@ -43,6 +43,20 @@ atom-text-editor::shadow {
 			border-right: 1px solid @pane-item-border-color;
 		}
 	}
+
+	// hide the variables and stacktrace
+	&[data-debugger-ready="false"] {
+		.go-debug-panel-variables,
+		.go-debug-panel-stacktrace {
+			display: none;
+		}
+	}
+	// reverse
+	&[data-debugger-ready="true"] {
+		.go-debug-panel-default {
+			display: none;
+		}
+	}
 }
 
 .go-debug-panel-commands {
@@ -59,20 +73,13 @@ atom-text-editor::shadow {
 	}
 }
 
-.go-debug-panel-stacktrace {
-	flex: 0 0 175px;
-}
-
-.go-debug-panel-stacktrace-list {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-
-	li {
-		cursor: pointer;
-	}
-	.active {
-		font-weight: bold;
+.go-debug-panel-default {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	> div {
+		flex: 1;
 	}
 }
 
@@ -99,5 +106,22 @@ atom-text-editor::shadow {
 		display: inline-block;
 		padding: 0 5px;
 		cursor: pointer;
+	}
+}
+
+.go-debug-panel-stacktrace {
+	flex: 0 0 175px;
+}
+
+.go-debug-panel-stacktrace-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		cursor: pointer;
+	}
+	.active {
+		font-weight: bold;
 	}
 }
