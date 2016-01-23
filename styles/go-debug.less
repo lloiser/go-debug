@@ -34,14 +34,10 @@ atom-text-editor::shadow {
 	display: flex;
 	background-color: @base-background-color;
 	border: 1px solid @pane-item-border-color;
-	min-height: 8.6em;
 
 	> * {
 		padding: 5px;
 
-		&:not(:last-child) {
-			border-right: 1px solid @pane-item-border-color;
-		}
 	}
 
 	// hide the variables and stacktrace
@@ -51,7 +47,7 @@ atom-text-editor::shadow {
 			display: none;
 		}
 	}
-	// reverse
+	// hide the default view
 	&[data-debugger-ready="true"] {
 		.go-debug-panel-default {
 			display: none;
@@ -59,7 +55,29 @@ atom-text-editor::shadow {
 	}
 }
 
+atom-panel {
+	&.panel-top, &.panel-bottom {
+		> .go-debug-panel {
+			min-height: 8.6em;
+			> *:not(:first-child) {
+				border-left: 1px solid @pane-item-border-color;
+			}
+		}
+	}
+	&.panel-left, &.panel-right {
+		> .go-debug-panel {
+			flex-direction: column;
+			min-width: 11em;
+			height: 100%;
+			> *:not(:first-child) {
+				border-top: 1px solid @pane-item-border-color;
+			}
+		}
+	}
+}
+
 .go-debug-panel-commands {
+	min-width: 10em;
 	flex-shrink: 0;
 
 	> .btn-group {
@@ -68,7 +86,7 @@ atom-text-editor::shadow {
 		margin-bottom: 5px;
 
 		> button {
-			width: 5em;
+			width: 50%;
 		}
 	}
 }
