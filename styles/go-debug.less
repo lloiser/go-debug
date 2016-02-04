@@ -35,15 +35,11 @@ atom-text-editor::shadow {
 	background-color: @base-background-color;
 	border: 1px solid @pane-item-border-color;
 
-	> * {
-		padding: 5px;
-		overflow: auto;
-	}
-
 	// hide the variables and stacktrace
 	&[data-debugger-ready="false"] {
 		.go-debug-panel-variables,
-		.go-debug-panel-stacktrace {
+		.go-debug-panel-stacktrace,
+		.go-debug-panel-goroutines {
 			display: none;
 		}
 	}
@@ -56,37 +52,22 @@ atom-text-editor::shadow {
 }
 
 atom-panel {
-	&.panel-top, &.panel-bottom {
+	&.top, &.bottom {
 		> .go-debug-panel {
 			min-height: 8.6em;
-			> *:not(:first-child) {
-				border-left: 1px solid @pane-item-border-color;
+			> *:not(:last-child) {
+				border-right: 1px solid @pane-item-border-color;
 			}
 		}
 	}
-	&.panel-left, &.panel-right {
+	&.left, &.right {
 		> .go-debug-panel {
 			flex-direction: column;
 			min-width: 11em;
 			height: 100%;
-			> *:not(:first-child) {
-				border-top: 1px solid @pane-item-border-color;
+			> *:not(:last-child) {
+				border-bottom: 1px solid @pane-item-border-color;
 			}
-		}
-	}
-}
-
-.go-debug-panel-commands {
-	min-width: 10em;
-	flex-shrink: 0;
-
-	> .btn-group {
-		display: block;
-		overflow: hidden;
-		margin-bottom: 5px;
-
-		> button {
-			width: 50%;
 		}
 	}
 }
@@ -105,6 +86,7 @@ atom-panel {
 	flex: 1;
 	overflow: auto;
 	white-space: pre;
+	padding: 5px;
 
 	ol {
 		list-style: none;
@@ -127,20 +109,45 @@ atom-panel {
 	}
 }
 
-.go-debug-panel-stacktrace {
-	flex: 0 0 15em;
-	white-space: nowrap;
+.go-debug-panel-sidepanel {
+	flex: 0 0 33%;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
-.go-debug-panel-stacktrace-list {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+.go-debug-panel-commands {
+	display: flex;
+	flex-shrink: 0;
+	min-width: 10em;
+	white-space: nowrap;
+	border-bottom: 1px solid @pane-item-border-color;
 
-	li {
-		cursor: pointer;
+	> .btn {
+		padding: 5px;
+		background: none;
+		border: none;
+		flex: 1;
+		border-radius: 0;
 	}
-	.active {
-		font-weight: bold;
+}
+
+.go-debug-panel-stacktrace,
+.go-debug-panel-goroutines {
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+.go-debug-panel-stacktrace-list,
+.go-debug-panel-goroutines-list {
+	background: transparent;
+	border: 0;
+	border-bottom: 1px solid;
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+
+	> option {
+		color: initial;
 	}
 }
