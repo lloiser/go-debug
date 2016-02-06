@@ -43,9 +43,9 @@ atom-text-editor::shadow {
 			display: none;
 		}
 	}
-	// hide the default view
+	// hide the info view
 	&[data-debugger-ready="true"] {
-		.go-debug-panel-default {
+		.go-debug-panel-info {
 			display: none;
 		}
 	}
@@ -53,26 +53,32 @@ atom-text-editor::shadow {
 
 atom-panel {
 	&.top, &.bottom {
-		> .go-debug-panel {
-			min-height: 8.6em;
+		.go-debug-panel {
+			min-height: 12em;
 			> *:not(:last-child) {
 				border-right: 1px solid @pane-item-border-color;
 			}
 		}
 	}
 	&.left, &.right {
-		> .go-debug-panel {
+		.go-debug-panel {
 			flex-direction: column;
 			min-width: 11em;
 			height: 100%;
 			> *:not(:last-child) {
 				border-bottom: 1px solid @pane-item-border-color;
 			}
+
+
+		}
+		.go-debug-panel-sidepanel {
+			flex: none;
+			flex-shrink: 0;
 		}
 	}
 }
 
-.go-debug-panel-default {
+.go-debug-panel-info {
 	flex: 1;
 	display: flex;
 	align-items: center;
@@ -113,7 +119,6 @@ atom-panel {
 	flex: 0 0 33%;
 	display: flex;
 	flex-direction: column;
-	height: 100%;
 }
 
 .go-debug-panel-commands {
