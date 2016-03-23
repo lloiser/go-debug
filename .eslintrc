@@ -7,6 +7,7 @@
 		"indent": [2, "tab"],
 		"linebreak-style": [2, "unix"],
 		"new-cap": 2,
+		"no-console": 0,
 		"no-extra-parens": [2, "functions"],
 		"no-new-wrappers": 2,
 		"no-this-before-super": 2,
@@ -14,7 +15,15 @@
 		"prefer-const": 1,
 		"quotes": [1, "double"],
 		"semi": [2, "always"],
-		"strict": [2, "never"]
+		"strict": [2, "never"],
+
+		"react/jsx-curly-spacing": [1, "never"],
+		"react/jsx-no-undef": 1,
+		"react/jsx-uses-react": 1,
+		"react/jsx-uses-vars": 1,
+		"react/no-deprecated": 1,
+		"react/no-unknown-property": 1,
+		"react/react-in-jsx-scope": 2,
 	},
 
 	"env": {
@@ -23,10 +32,17 @@
 	},
 
 	"ecmaFeatures": {
-		"modules": true
+		"modules": true,
+		"jsx": true
 	},
 
+	"plugins": [
+		"babel",
+		"react"
+	],
+
 	"globals": {
-		"atom": true
+		"atom": true,
+		"require": true
 	}
 }

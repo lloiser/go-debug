@@ -5,21 +5,41 @@
   "description": "go debugger using delve for atom",
   "keywords": [
     "go",
+    "golang",
     "debug",
     "debugger",
     "delve",
     "dlv"
   ],
   "repository": "https://github.com/lloiser/go-debug",
+  "bugs": {
+    "url": "https://github.com/lloiser/go-debug/issues"
+  },
   "license": "MIT",
   "engines": {
-    "atom": ">=1.0.0 <2.0.0"
+    "atom": ">=1.5.3 <2.0.0"
   },
   "dependencies": {
+    "atom-package-deps": "^4.0.1",
     "interact.js": "^1.2.6",
-    "json-rpc2": "^1.0.2"
+    "json-rpc2": "^1.0.2",
+    "react-for-atom": "^0.14.7-0",
+    "react-redux": "^4.4.1",
+    "redux": "^3.3.1"
   },
   "devDependencies": {
-    "eslint": "^1.10.3"
+    "eslint": "^1.10.3",
+    "eslint-plugin-babel": "^3.1.0",
+    "eslint-plugin-react": "^3.16.1"
+  },
+  "package-deps": [
+    "go-config"
+  ],
+  "consumedServices": {
+    "go-config": {
+      "versions": {
+        "1.0.0": "consumeGoconfig"
+      }
+    }
   }
 }
