@@ -10,6 +10,7 @@ import { store } from "./store";
 import * as Delve from "./delve";
 
 const COMMANDS_LAYOUT_NOT_READY = [
+	// TODO: maybe inline them and add custom logic (progress wheel etc)?
 	{ cmd: "runTests",   text: "Test",  title: "Run package test" },
 	{ cmd: "runPackage", text: "Debug", title: "Debug package" }
 ];
@@ -48,6 +49,7 @@ class Panel extends React.Component {
 	}
 
 	render() {
+		// TODO: add the busy overlay if state == "busy" || "starting"
 		return <div className="go-debug-panel-root" style={{width: this.props.width}}>
 			<div className="go-debug-panel-resizer" onMouseDown={this.onResizeStart} />
 			{this.renderCommands()}
@@ -57,6 +59,10 @@ class Panel extends React.Component {
 				{this.renderVariables()}
 				{this.renderBreakpoints()}
 			</div>
+			<button type="button" onClick={this.props.onToggleOutput}
+				className="btn go-debug-btn-flat go-debug-panel-showoutput">
+				Toggle output panel
+			</button>
 		</div>;
 	}
 
@@ -65,7 +71,7 @@ class Panel extends React.Component {
 		return <div className="go-debug-panel-commands">{layout.map(this.renderCommand, this)}</div>;
 	}
 	renderCommand(btn, i) {
-		return <button key={i} type="button" className="btn" title={btn.title}
+		return <button key={i} type="button" className="btn go-debug-btn-flat" title={btn.title}
 			data-cmd={btn.cmd} onClick={this.onCommandClick}>
 			{btn.icon ? <span className={"icon-" + btn.icon} /> : null}
 			{btn.text}
@@ -119,7 +125,7 @@ class Panel extends React.Component {
 		const expanded = this.state.expanded[name];
 		return <div className="go-debug-expandable" data-expanded={expanded}>
 			<div className="go-debug-expandable-header" onClick={this.onExpandChange.bind(this, name)}>
-				<span className="go-debug-toggle">{expanded ? "▼" : "▶"}</span>
+				<span className={"go-debug-toggle icon icon-chevron-" + (expanded ? "down" : "right")}></span>
 				{text}
 			</div>
 			<div className={`go-debug-expandable-body go-debug-panel-${name}`}>{content}</div>
@@ -202,6 +208,9 @@ const PanelListener = connect(
 		return {
 			onUpdateWidth: (width) => {
 				dispatch({ type: "SET_WIDTH", width });
+			},
+			onToggleOutput: () => {
+				dispatch({ type: "TOGGLE_OUTPUT", toggle: true });
 			}
 		};
 	}
@@ -211,25 +220,16 @@ let atomPanel;
 
 export default {
 	show() {
-		const el = document.createElement("div");
-		el.className = "go-debug-panel";
-		// el.style.width = props.state.width ? props.state.width + "px" : "";
-		atomPanel = atom.workspace.addRightPanel({ // -> go-debug.panelPosition
-			item: el,
-			visible: true
-		});
+		const item = document.createElement("div");
+		item.className = "go-debug-panel";
+		atomPanel = atom.workspace.addRightPanel({ item, visible: true });
 
 		ReactDOM.render(
 			<Provider store={store}>
 				<PanelListener />
 			</Provider>,
-			el
+			item
 		);
-	},
-	serialize() {
-		return {
-			width: atomPanel.getItem().firstChild.getBoundingClientRect().width
-		};
 	},
 	destroy() {
 		atomPanel.destroy();

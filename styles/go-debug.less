@@ -7,6 +7,7 @@
 @go-debug-debug-line-color-bg: rgba(64, 115, 255, 0.5);
 @go-debug-breakpoint-size: 0.8em;
 @go-debug-panel-size: 25em;
+@go-debug-output-size: 20em;
 
 .go-debug-breakpoint {
 	display: inline-block;
@@ -44,7 +45,6 @@ atom-text-editor::shadow {
 
 .go-debug-panel {
 	display: flex;
-	background-color: @base-background-color;
 	border-left: 1px solid @pane-item-border-color;
 }
 .go-debug-panel-root {
@@ -70,18 +70,24 @@ atom-text-editor::shadow {
 
 	> .btn {
 		flex: 1;
-		min-height: 3em;
-		padding: 0.5em;
-		border: none;
-		border-radius: 0;
-		line-height: 1;
-		background: none;
 	}
+}
+
+button.go-debug-btn-flat {
+	border: none;
+	border-radius: 0;
+	background: none;
+	min-height: 3em;
 }
 
 .go-debug-panel-content {
 	overflow: auto;
 	flex: 1;
+}
+
+.go-debug-panel-showoutput {
+	flex-shrink: 0;
+	text-align: center;
 }
 
 .go-debug-panel-stacktrace,
@@ -101,11 +107,13 @@ atom-text-editor::shadow {
 }
 
 .go-debug-panel-variables {
-	padding: 0 0.5em;
+	li {
+		padding: 0.1em 0;
+	}
 	ol {
 		overflow: visible;
 		margin: 0;
-		padding: 0;
+		padding: 0 0.5em;
 		white-space: pre;
 		list-style: none;
 		ol {
@@ -116,12 +124,32 @@ atom-text-editor::shadow {
 
 .go-debug-panel-breakpoints {
 	> * {
-		padding: 0.2em 0.4em 0;
+		padding: 0.2em 0.5em 0;
 		cursor: pointer;
 	}
 	.go-debug-breakpoint {
 		margin-right: 0.2em;
 	}
+}
+
+.go-debug-output-header {
+	display: flex;
+	padding-left: 0.5em;
+	align-items: center;
+	.text {
+		flex: 1;
+		margin: 0;
+	}
+	.icon-circle-slash, .icon-x {
+		flex-shrink: 0;
+	}
+}
+
+.go-debug-output-list {
+	max-height: @go-debug-output-size;
+	overflow: auto;
+	white-space: pre;
+	padding: 0.2em 0.5em;
 }
 
 .go-debug-expandable {
@@ -130,9 +158,13 @@ atom-text-editor::shadow {
 
 .go-debug-expandable-header {
 	cursor: pointer;
-	border-bottom: 1px solid silver;
-	padding: 0.2em 0.4em;
+	border-bottom: 1px solid currentColor;
+	padding: 0.2em 0.5em;
 	font-weight: bold;
+}
+
+.go-debug-expandable-body {
+	overflow-x: auto;
 }
 
 .go-debug-expandable[data-expanded="false"] .go-debug-expandable-body{
@@ -141,10 +173,15 @@ atom-text-editor::shadow {
 
 .go-debug-toggle {
 	display: inline-block;
-	width: 1em;
-	margin-right: 0.2em;
 	cursor: pointer;
+	text-align: center;
+	width: 1em;
 
+	&::before {
+		width: auto;
+		height: auto;
+		font-size: inherit;
+	}
 	&.go-debug-toggle-hidden {
 		visibility: hidden;
 	}

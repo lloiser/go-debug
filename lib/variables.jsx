@@ -37,12 +37,11 @@ export default connect(
 
 const Variable = (props) => {
 	const name = renderValue(props.name);
-	const toggleClassName = "go-debug-toggle" + (!props.children ? " go-debug-toggle-hidden": "");
 	const isExpanded = expanded[props.fullPath];
+	let toggleClassName = "go-debug-toggle" + (!props.children ? " go-debug-toggle-hidden": "");
+	toggleClassName += " icon icon-chevron-" + (isExpanded ? "down" : "right");
 	return <li>
-		<span className={toggleClassName} data-path={props.fullPath}>
-			{isExpanded ? "▼" : "▶"}
-		</span>
+		<span className={toggleClassName} data-path={props.fullPath} />
 		{props.value ? <span>{name}: {renderValue(props.value)}</span> : <span>{name}</span>}
 		{isExpanded ? <Children children={props.children} fullPath={props.fullPath} /> : null}
 	</li>;
@@ -203,6 +202,17 @@ const factory = {
 				value: shortType(v.type, props, nil())
 			};
 		}
+
+		// nicer handling for errors
+		if (v.type === "error" && child.type === "*struct errors.errorString") {
+			return {
+				value: [
+					"error ",
+					factory.variable({ variable:  child.children[0].children[0] }).value
+				]
+			};
+		}
+
 		const { value, children } = factory.variable({ variable: child });
 		return {
 			value: [shortType(v.type, props, shortType(child.type, props)), value],
@@ -329,7 +339,7 @@ function shortType(type, o = {}, additional) {
 	t += type.split("/").pop();
 	return { value: [t, additional] };
 }
-function nil() { return { value: "nil", className: "constant language" }; }
+function nil() { return { value: " nil", className: "constant language" }; }
 function formatNumber(value) { return { value, className: "constant numeric" }; }
 function formatAddr(v) { return formatNumber("0x" + v.addr.toString(16)); }
 
