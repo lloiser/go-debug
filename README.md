@@ -2,6 +2,8 @@
 
 A go debugger for atom using [delve](https://github.com/derekparker/delve).
 
+![Demo](https://raw.githubusercontent.com/lloiser/go-debug/master/lib/panel.jsx)
+
 ## Install
 
 Either `apm install go-debug` or search for `go-debug` in the settings.
