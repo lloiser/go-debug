@@ -2,7 +2,7 @@
 
 A go debugger for atom using [delve](https://github.com/derekparker/delve).
 
-![Demo](https://raw.githubusercontent.com/lloiser/go-debug/master/lib/panel.jsx)
+![Demo](https://raw.githubusercontent.com/lloiser/go-debug/master/resources/demo.gif)
 
 ## Install
 
