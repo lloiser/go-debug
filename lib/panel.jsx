@@ -207,10 +207,10 @@ const PanelListener = connect(
 	(dispatch) => {
 		return {
 			onUpdateWidth: (width) => {
-				dispatch({ type: "SET_WIDTH", width });
+				dispatch({ type: "SET_PANEL_WIDTH", width });
 			},
 			onToggleOutput: () => {
-				dispatch({ type: "TOGGLE_OUTPUT", toggle: true });
+				dispatch({ type: "TOGGLE_OUTPUT" });
 			}
 		};
 	}
@@ -218,11 +218,18 @@ const PanelListener = connect(
 
 let atomPanel;
 
+store.subscribe(() => {
+	const panelState = store.getState().panel;
+	if (panelState.visible !== atomPanel.isVisible()) {
+		atomPanel[panelState.visible ? "show" : "hide"]();
+	}
+});
+
 export default {
-	show() {
+	init() {
 		const item = document.createElement("div");
 		item.className = "go-debug-panel";
-		atomPanel = atom.workspace.addRightPanel({ item, visible: true });
+		atomPanel = atom.workspace.addRightPanel({ item, visible: store.getState().panel.visible });
 
 		ReactDOM.render(
 			<Provider store={store}>

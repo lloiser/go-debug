@@ -1,10 +1,11 @@
 {
 	"atom-workspace": {
-		"f5":       "go-debug:runPackage",
-		"ctrl-f5":  "go-debug:runTests",
-		"shift-f5": "go-debug:restart",
-		"f8":       "go-debug:continue",
-		"f10":      "go-debug:next",
-		"f11":      "go-debug:step"
+		"f5":            "go-debug:runPackage",
+		"ctrl-f5":       "go-debug:runTests",
+		"shift-f5":      "go-debug:restart",
+		"f8":            "go-debug:continue",
+		"f10":           "go-debug:next",
+		"f11":           "go-debug:step",
+		"ctrl-k ctrl-g": "go-debug:togglePanel"
 	}
 }

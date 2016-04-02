@@ -55,7 +55,6 @@ ReactDOM.render(
 );
 
 store.subscribe(() => {
-	// open the file of the selected stacktrace and highlight the current line
 	const outputState = store.getState().output;
 	if (outputState.visible !== atomPanel.isVisible()) {
 		atomPanel[outputState.visible ? "show" : "hide"]();
