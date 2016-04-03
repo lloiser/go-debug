@@ -4,12 +4,12 @@ import { React, ReactDOM } from "react-for-atom";
 import { Provider, connect } from "react-redux";
 
 import { store } from "./store";
+import Message from "./output-message";
 
 class Output extends React.Component {
 	render() {
 		const items = this.props.messages.map((msg, i) => {
-			// TODO: colors for different types of messages (stdout/err, ...)
-			return <div key={i}>{msg.message}</div>;
+			return <Message key={i} message={msg.message} />;
 		});
 		return <div className="go-debug-output">
 			<div className="go-debug-output-header">
