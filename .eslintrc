@@ -5,7 +5,6 @@
 		"consistent-return": 2,
 		"eqeqeq": 2,
 		"indent": [2, "tab"],
-		"linebreak-style": [2, "unix"],
 		"new-cap": 2,
 		"no-console": 0,
 		"no-extra-parens": [2, "functions"],
