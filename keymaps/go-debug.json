@@ -3,9 +3,15 @@
 		"f5":            "go-debug:runPackage",
 		"ctrl-f5":       "go-debug:runTests",
 		"shift-f5":      "go-debug:restart",
+		"f6":            "go-debug:stop",
 		"f8":            "go-debug:continue",
 		"f10":           "go-debug:next",
-		"f11":           "go-debug:step",
+		"f11":           "go-debug:step"
+	},
+	":not(.platform-darwin) atom-workspace": {
 		"ctrl-k ctrl-g": "go-debug:togglePanel"
+	},
+	".platform-darwin atom-workspace": {
+		"cmd-k cmd-g": "go-debug:togglePanel"
 	}
 }
