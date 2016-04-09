@@ -5,6 +5,7 @@
 		"shift-f5":      "go-debug:restart",
 		"f6":            "go-debug:stop",
 		"f8":            "go-debug:continue",
+		"f9":            "go-debug:toggleBreakpoint",
 		"f10":           "go-debug:next",
 		"f11":           "go-debug:step"
 	},
