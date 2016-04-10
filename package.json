@@ -48,6 +48,12 @@
       "description": "Determines whether the commands of this package are only available in go source files",
       "type": "boolean",
       "default": false
+    },
+    "panelInitialVisible": {
+      "title": "Panel initially visible",
+      "description": "Determines whether the panel is initially visible for new atom instances or not.",
+      "type": "boolean",
+      "default": true
     }
   }
 }
