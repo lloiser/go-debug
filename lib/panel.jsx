@@ -164,7 +164,8 @@ class Panel extends React.Component {
 		if (!command) {
 			return;
 		}
-		atom.commands.dispatch(ReactDOM.findDOMNode(this), `go-debug:${command}`);
+		const view = atom.views.getView(atom.workspace.getActiveTextEditor());
+		atom.commands.dispatch(view, `go-debug:${command}`);
 	}
 
 	onStacktraceClick(ev) {
