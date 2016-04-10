@@ -1,5 +1,6 @@
 "use babel";
 
+import { CompositeDisposable } from "atom";
 import { React, ReactDOM } from "react-for-atom";
 import { Provider, connect } from "react-redux";
 
@@ -44,25 +45,38 @@ const OutputListener = connect(
 	}
 )(Output);
 
-const item = document.createElement("div");
-let atomPanel = atom.workspace.addBottomPanel({ item, visible: false });
+let atomPanel;
 
-ReactDOM.render(
-	<Provider store={store}>
-		<OutputListener />
-	</Provider>,
-	item
-);
-
-store.subscribe(() => {
+function onStoreChange() {
 	const outputState = store.getState().output;
 	if (outputState.visible !== atomPanel.isVisible()) {
 		atomPanel[outputState.visible ? "show" : "hide"]();
 	}
-});
+}
 
+let subscriptions;
 export default {
-	destroy() {
+	init() {
+		subscriptions = new CompositeDisposable(
+			{ dispose: store.subscribe(onStoreChange) }
+		);
+
+		const item = document.createElement("div");
+		atomPanel = atom.workspace.addBottomPanel({ item, visible: false });
+
+		ReactDOM.render(
+			<Provider store={store}>
+				<OutputListener />
+			</Provider>,
+			item
+		);
+	},
+	dispose() {
+		subscriptions.dispose();
+		subscriptions = null;
+
+		ReactDOM.unmountComponentAtNode(atomPanel.getItem());
+
 		atomPanel.destroy();
 		atomPanel = null;
 	}

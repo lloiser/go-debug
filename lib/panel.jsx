@@ -1,7 +1,8 @@
 "use babel";
 
-import { React, ReactDOM } from "react-for-atom";
+import { CompositeDisposable } from "atom";
 import path from "path";
+import { React, ReactDOM } from "react-for-atom";
 import { Provider, connect } from "react-redux";
 
 import Variables from "./variables.jsx";
@@ -218,15 +219,20 @@ const PanelListener = connect(
 
 let atomPanel;
 
-store.subscribe(() => {
+function onStoreChange() {
 	const panelState = store.getState().panel;
 	if (panelState.visible !== atomPanel.isVisible()) {
 		atomPanel[panelState.visible ? "show" : "hide"]();
 	}
-});
+}
 
+let subscriptions;
 export default {
 	init() {
+		subscriptions = new CompositeDisposable(
+			{ dispose: store.subscribe(onStoreChange) }
+		);
+
 		const item = document.createElement("div");
 		item.className = "go-debug-panel";
 		atomPanel = atom.workspace.addRightPanel({ item, visible: store.getState().panel.visible });
@@ -238,7 +244,12 @@ export default {
 			item
 		);
 	},
-	destroy() {
+	dispose() {
+		subscriptions.dispose();
+		subscriptions = null;
+
+		ReactDOM.unmountComponentAtNode(atomPanel.getItem());
+
 		atomPanel.destroy();
 		atomPanel = null;
 	}
