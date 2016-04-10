@@ -19,6 +19,7 @@ see https://github.com/derekparker/delve/tree/master/Documentation/installation
 * `shift-f5` restarts the current delve session (`r / restart`)
 * `f6` stops delve (`exit / quit / q`)
 * `f8` continue the execution (`c / continue`)
+* `f9` toggle breakpoint
 * `f10` step over to next source line (`n / next`)
 * `f11` step into functions (`s / step`)
 * `cmd-k cmd-g` (mac) / `ctrl-k ctrl-g` (others) toggles the main panel
