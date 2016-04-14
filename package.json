@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "atom-package-deps": "^4.0.1",
-    "interact.js": "^1.2.6",
     "json-rpc2": "^1.0.2",
     "react-for-atom": "^0.14.7-0",
     "react-redux": "^4.4.1",

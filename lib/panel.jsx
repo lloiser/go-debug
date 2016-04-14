@@ -54,6 +54,7 @@ class Panel extends React.Component {
 		return <div className="go-debug-panel-root" style={{width: this.props.width}}>
 			<div className="go-debug-panel-resizer" onMouseDown={this.onResizeStart} />
 			{this.renderCommands()}
+			{this.renderArgs()}
 			<div className="go-debug-panel-content">
 				{this.renderStacktrace()}
 				{this.renderGoroutines()}
@@ -77,6 +78,13 @@ class Panel extends React.Component {
 			{btn.icon ? <span className={"icon-" + btn.icon} /> : null}
 			{btn.text}
 		</button>;
+	}
+
+	renderArgs() {
+		return <div>
+			<input className="go-debug-panel-args native-key-bindings" value={this.props.args}
+				placeholder="arguments passed to delve after --" onChange={this.props.onArgsChange} />
+		</div>;
 	}
 
 	renderStacktrace() {
@@ -199,6 +207,7 @@ const PanelListener = connect(
 		return {
 			width: state.panel.width,
 			state: state.delve.state,
+			args: state.delve.args,
 			stacktrace: state.delve.stacktrace,
 			goroutines: state.delve.goroutines,
 			breakpoints: state.delve.breakpoints,
@@ -213,6 +222,9 @@ const PanelListener = connect(
 			},
 			onToggleOutput: () => {
 				dispatch({ type: "TOGGLE_OUTPUT" });
+			},
+			onArgsChange: (ev) => {
+				dispatch({ type: "UPDATE_ARGS", args: ev.target.value });
 			}
 		};
 	}
