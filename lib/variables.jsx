@@ -78,7 +78,7 @@ const factory = {
 		}
 
 		if (!v.value && v.addr === 0) {
-			return { value: shortType(v.type, props, nil()) };
+			return { value: [shortType(v.type), nil()] };
 		}
 
 		let fn = KINDS[v.kind];
@@ -107,7 +107,7 @@ const factory = {
 		const kind = KINDS[v.kind];
 		const typeInfo = kind === "slice" && ["(len: ", formatNumber(v.len), ", cap: ", formatNumber(v.cap), ")"];
 		return {
-			value: shortType(v.type, props, typeInfo),
+			value: [shortType(v.type), typeInfo],
 			children
 		};
 	},
@@ -120,7 +120,7 @@ const factory = {
 
 		if (child.onlyAddr) {
 			return {
-				value: ["(", shortType(v.type, props), ")(", formatAddr(child), ")"]
+				value: ["(", shortType(v.type), ")(", formatAddr(child), ")"]
 			};
 		}
 		const { value, children } = factory.variable({
@@ -169,12 +169,12 @@ const factory = {
 			content = [c0.value, "/", c1.value];
 		}
 		return {
-			value: shortType(v.type, props, content)
+			value: [shortType(v.type), content]
 		};
 	},
 	struct(props) {
 		const v = props.variable;
-		const type = shortType(v.type, props);
+		const type = shortType(v.type);
 		const diff = v.len - v.children.length;
 		if (diff > 0) {
 			return {
@@ -199,7 +199,7 @@ const factory = {
 		const child = v.children[0];
 		if (child.kind === 0 && child.addr === 0) {
 			return {
-				value: shortType(v.type, props, nil())
+				value: [shortType(v.type), nil()]
 			};
 		}
 
@@ -215,7 +215,7 @@ const factory = {
 
 		const { value, children } = factory.variable({ variable: child });
 		return {
-			value: [shortType(v.type, props, shortType(child.type, props)), value],
+			value: [shortType(v.type), " (", value, ")"],
 			children
 		};
 	},
@@ -246,7 +246,7 @@ const factory = {
 		}
 
 		return {
-			value: shortType(v.type, props),
+			value: shortType(v.type),
 			children: children
 		};
 	},
@@ -311,14 +311,14 @@ const KINDS = [
 	// total: 27...
 ];
 
-function shortType(type, o = {}, additional) {
+function shortType(type) {
 	if (type.startsWith("map[")) {
 		// does not work maps with maps:
 		// map[map[int]string]float32
 		// map[float32]map[int]string
 		// map[map[int]string]map[float32]string
 		const parts = type.split("]");
-		return { value: ["map[", shortType(parts[0].substr(4)), "]", shortType(parts[1]), additional] };
+		return ["map[", shortType(parts[0].substr(4)), "]", shortType(parts[1])];
 	}
 	if (type.startsWith("struct ")) {
 		type = type.substr("struct ".length);
@@ -337,7 +337,7 @@ function shortType(type, o = {}, additional) {
 		type = type.substring(1);
 	}
 	t += type.split("/").pop();
-	return { value: [t, additional] };
+	return t;
 }
 function nil() { return { value: " nil", className: "constant language" }; }
 function formatNumber(value) { return { value, className: "constant numeric" }; }

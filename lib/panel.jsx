@@ -83,7 +83,7 @@ class Panel extends React.Component {
 			const fn = st.function.name.split("/").pop();
 			return <div key={index} className={className} data-index={index} onClick={this.onStacktraceClick}>
 				<div>{fn}</div>
-				<div>@ {file}</div>
+				<div>@ {file}:{st.line}</div>
 			</div>;
 		});
 		return this.renderExpandable("stacktrace", "Stacktrace", items);
@@ -97,7 +97,7 @@ class Panel extends React.Component {
 			const fn = userCurrentLoc.function.name.split("/").pop();
 			return <div key={id} className={className} data-id={id} onClick={this.onGoroutineClick}>
 				<div>{fn}</div>
-				<div>@ {file}</div>
+				<div>@ {file}:{userCurrentLoc.line}</div>
 			</div>;
 		});
 		return this.renderExpandable("goroutines", "Goroutines", items);
