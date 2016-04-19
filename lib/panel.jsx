@@ -9,19 +9,7 @@ import Variables from "./variables.jsx";
 import { elementPropInHierarcy } from "./utils";
 import { store } from "./store";
 import * as Delve from "./delve";
-
-const COMMANDS_LAYOUT_NOT_READY = [
-	// TODO: maybe inline them and add custom logic (progress wheel etc)?
-	{ cmd: "runTests",   text: "Test",  title: "Run package test" },
-	{ cmd: "runPackage", text: "Debug", title: "Debug package" }
-];
-const COMMANDS_LAYOUT_READY = [
-	{ cmd: "continue", icon: "triangle-right",   title: "Continue" },
-	{ cmd: "next",     icon: "arrow-right",      title: "Next" },
-	{ cmd: "step",     icon: "arrow-down",       title: "Step" },
-	{ cmd: "restart",  icon: "sync",             title: "Restart" },
-	{ cmd: "stop",     icon: "primitive-square", title: "Stop" }
-];
+import * as Commands from "./commands";
 
 class Panel extends React.Component {
 	constructor(props) {
@@ -69,14 +57,14 @@ class Panel extends React.Component {
 	}
 
 	renderCommands() {
-		const layout = Delve.isStarted() ? COMMANDS_LAYOUT_READY : COMMANDS_LAYOUT_NOT_READY;
+		const layout = Commands.getPanelCommands();
 		return <div className="go-debug-panel-commands">{layout.map(this.renderCommand, this)}</div>;
 	}
-	renderCommand(btn, i) {
-		return <button key={i} type="button" className="btn go-debug-btn-flat" title={btn.title}
-			data-cmd={btn.cmd} onClick={this.onCommandClick}>
-			{btn.icon ? <span className={"icon-" + btn.icon} /> : null}
-			{btn.text}
+	renderCommand(cmd) {
+		return <button key={cmd.cmd} type="button" className="btn go-debug-btn-flat" title={cmd.title}
+			data-cmd={cmd.cmd} onClick={this.onCommandClick}>
+			{cmd.icon ? <span className={"icon-" + cmd.icon} /> : null}
+			{cmd.text}
 		</button>;
 	}
 
@@ -172,8 +160,7 @@ class Panel extends React.Component {
 		if (!command) {
 			return;
 		}
-		const view = atom.views.getView(atom.workspace.getActiveTextEditor());
-		atom.commands.dispatch(view, `go-debug:${command}`);
+		Commands.get(command).action();
 	}
 
 	onStacktraceClick(ev) {

@@ -1,18 +1,18 @@
 {
 	"atom-workspace": {
-		"f5":            "go-debug:runPackage",
-		"ctrl-f5":       "go-debug:runTests",
+		"f5":            "go-debug:run-package",
+		"ctrl-f5":       "go-debug:run-tests",
 		"shift-f5":      "go-debug:restart",
 		"f6":            "go-debug:stop",
 		"f8":            "go-debug:continue",
-		"f9":            "go-debug:toggleBreakpoint",
+		"f9":            "go-debug:toggle-breakpoint",
 		"f10":           "go-debug:next",
 		"f11":           "go-debug:step"
 	},
 	":not(.platform-darwin) atom-workspace": {
-		"ctrl-k ctrl-g": "go-debug:togglePanel"
+		"ctrl-k ctrl-g": "go-debug:toggle-panel"
 	},
 	".platform-darwin atom-workspace": {
-		"cmd-k cmd-g": "go-debug:togglePanel"
+		"cmd-k cmd-g": "go-debug:toggle-panel"
 	}
 }
