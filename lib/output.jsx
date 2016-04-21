@@ -8,6 +8,10 @@ import { store } from "./store";
 import Message from "./output-message";
 
 class Output extends React.Component {
+	componentDidUpdate() {
+		const listEl = ReactDOM.findDOMNode(this.refs.list);
+		listEl.scrollTop = listEl.scrollHeight;
+	}
 	render() {
 		const items = this.props.messages.map((msg, i) => {
 			return <Message key={i} message={msg.message} />;
@@ -22,7 +26,7 @@ class Output extends React.Component {
 					<span className="icon-x" title="close"></span>
 				</button>
 			</div>
-			<div className="go-debug-output-list">{items}</div>
+			<div className="go-debug-output-list" ref="list">{items}</div>
 		</div>;
 	}
 }
