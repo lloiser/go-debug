@@ -136,9 +136,19 @@ button.go-debug-btn-flat {
 		padding: 0.2em 0.5em 0;
 		cursor: pointer;
 		white-space: nowrap;
+		display: flex;
+		align-items: center;
+		> .icon-x::before {
+			height: auto;
+			width: auto;
+			margin-right: 0.3em;
+			flex-shrink: 0;
+			font-size: small;
+		}
 	}
 	.go-debug-breakpoint {
 		margin-right: 0.2em;
+		flex-shrink: 0;
 	}
 }
 
@@ -149,9 +159,6 @@ button.go-debug-btn-flat {
 	.text {
 		flex: 1;
 		margin: 0;
-	}
-	.icon-circle-slash, .icon-x {
-		flex-shrink: 0;
 	}
 }
 

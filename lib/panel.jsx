@@ -7,7 +7,7 @@ import { Provider, connect } from "react-redux";
 
 import Variables from "./variables.jsx";
 import { elementPropInHierarcy } from "./utils";
-import { store } from "./store";
+import { store, getBreakpoints } from "./store";
 import * as Delve from "./delve";
 import * as Commands from "./commands";
 
@@ -15,13 +15,9 @@ class Panel extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.onResizeStart = this.onResizeStart.bind(this);
-		this.onResize = this.onResize.bind(this);
-		this.onResizeEnd = this.onResizeEnd.bind(this);
-		this.onCommandClick = this.onCommandClick.bind(this);
-		this.onStacktraceClick = this.onStacktraceClick.bind(this);
-		this.onGoroutineClick = this.onGoroutineClick.bind(this);
-		this.onBreakpointClick = this.onBreakpointClick.bind(this);
+		["onResizeStart", "onResize", "onResizeEnd", "onCommandClick", "onStacktraceClick",
+			"onGoroutineClick", "onBreakpointClick", "onRemoveBreakpointClick"]
+			.forEach((fn) => this[fn] = this[fn].bind(this));
 
 		this.state = {
 			expanded: {
@@ -109,8 +105,9 @@ class Panel extends React.Component {
 
 	renderBreakpoints() {
 		const items = this.props.breakpoints.map(({ file, line, state, message }) => {
-			return <div key={file + "|" + line} data-file={file} title={message || ""}
-				data-line={line} onClick={this.onBreakpointClick}>
+			return <div key={file + "|" + line} data-file={file} data-line={line}
+				title={message || ""} onClick={this.onBreakpointClick}>
+				<span className="icon-x" onClick={this.onRemoveBreakpointClick} />
 				<span className={"go-debug-breakpoint go-debug-breakpoint-state-" + state} />
 				{shortenPath(file)}:{line+1}
 			</div>;
@@ -181,10 +178,58 @@ class Panel extends React.Component {
 		const file = elementPropInHierarcy(ev.target, "dataset.file");
 		if (file) {
 			const line = +elementPropInHierarcy(ev.target, "dataset.line");
-			atom.workspace.open(file, { initialLine: line, searchAllPanes: true }).then(() => {
-				const editor = atom.workspace.getActiveTextEditor();
-				editor.scrollToBufferPosition([line, 0], { center: true });
+
+			// check if the file even exists
+			this.fileExists(file)
+				.then(() => {
+					atom.workspace.open(file, { initialLine: line, searchAllPanes: true }).then(() => {
+						const editor = atom.workspace.getActiveTextEditor();
+						editor.scrollToBufferPosition([line, 0], { center: true });
+					});
+				})
+				.catch(() => this.removeBreakpoints(file));
+		}
+	}
+
+	fileExists(file) {
+		return Promise.all(
+			atom.project.getDirectories().map(
+				(dir) => dir.getFile(dir.relativize(file)).exists()
+			)
+		).then((results) => {
+			if (results.indexOf(true) === 0) {
+				return Promise.resolve();
+			}
+			return Promise.reject();
+		});
+	}
+
+	removeBreakpoints(file) {
+		const noti = atom.notifications.addWarning(
+			`The file ${file} does not exist anymore.`,
+			{
+				dismissable: true,
+				detail: "Remove all breakpoints for this file?",
+				buttons: [{
+					text: "Yes",
+					onDidClick: () => {
+						noti.dismiss();
+						getBreakpoints(file).forEach((bp) => Delve.removeBreakpoint(file, bp.line));
+					}
+				}, {
+					text: "No",
+					onDidClick: () => noti.dismiss()
+				}]
 			});
+	}
+
+	onRemoveBreakpointClick(ev) {
+		const file = elementPropInHierarcy(ev.target, "dataset.file");
+		if (file) {
+			const line = +elementPropInHierarcy(ev.target, "dataset.line");
+			Delve.removeBreakpoint(file, line);
+			ev.preventDefault();
+			ev.stopPropagation();
 		}
 	}
 }
