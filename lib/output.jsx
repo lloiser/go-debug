@@ -6,8 +6,12 @@ import { Provider, connect } from "react-redux";
 
 import { store } from "./store";
 import Message from "./output-message";
+import { copyToClipboard } from "./utils";
 
 class Output extends React.Component {
+	componentDidMount() {
+		copyToClipboard(ReactDOM.findDOMNode(this));
+	}
 	componentDidUpdate() {
 		const listEl = ReactDOM.findDOMNode(this.refs.list);
 		listEl.scrollTop = listEl.scrollHeight;
@@ -26,7 +30,7 @@ class Output extends React.Component {
 					<span className="icon-x" title="close"></span>
 				</button>
 			</div>
-			<div className="go-debug-output-list" ref="list">{items}</div>
+			<div className="go-debug-output-list" ref="list" tabIndex={-1}>{items}</div>
 		</div>;
 	}
 }

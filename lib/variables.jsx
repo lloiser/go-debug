@@ -1,12 +1,16 @@
 "use babel";
 
 /* eslint-disable no-use-before-define */
-import { React } from "react-for-atom";
+import { React, ReactDOM } from "react-for-atom";
 import { connect } from "react-redux";
+import { copyToClipboard } from "./utils";
 
 const expanded = {};
 
 class Variables extends React.Component {
+	componentDidMount() {
+		copyToClipboard(ReactDOM.findDOMNode(this));
+	}
 	render() {
 		const { stacktrace } = this.props;
 		const vars = stacktrace ? stacktrace.Locals.concat(stacktrace.Arguments) : [];
@@ -42,7 +46,7 @@ const Variable = (props) => {
 	toggleClassName += " icon icon-chevron-" + (isExpanded ? "down" : "right");
 	return <li>
 		<span className={toggleClassName} data-path={props.fullPath} />
-		{props.value ? <span>{name}: {renderValue(props.value)}</span> : <span>{name}</span>}
+		{props.value ? <span tabIndex={-1}>{name}: {renderValue(props.value)}</span> : <span>{name}</span>}
 		{isExpanded ? <Children children={props.children} fullPath={props.fullPath} /> : null}
 	</li>;
 };
