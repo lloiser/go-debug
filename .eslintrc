@@ -4,7 +4,7 @@
 		"camelcase": [1, { "properties": "always" }],
 		"consistent-return": 2,
 		"eqeqeq": 2,
-		"indent": [2, "tab"],
+		"indent": [2, "tab", { "SwitchCase": 1 }],
 		"new-cap": 2,
 		"no-console": 0,
 		"no-extra-parens": [2, "functions"],
@@ -30,9 +30,12 @@
 		"es6": true
 	},
 
-	"ecmaFeatures": {
-		"modules": true,
-		"jsx": true
+	"parserOptions": {
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true,
+			"experimentalObjectRestSpread": true
+		}
 	},
 
 	"plugins": [

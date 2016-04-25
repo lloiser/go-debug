@@ -22,14 +22,14 @@
   "dependencies": {
     "atom-package-deps": "^4.0.1",
     "json-rpc2": "^1.0.2",
-    "react-for-atom": "^0.14.7-0",
-    "react-redux": "^4.4.1",
-    "redux": "^3.3.1"
+    "react-for-atom": "^15.0.1-0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2"
   },
   "devDependencies": {
-    "eslint": "^1.10.3",
-    "eslint-plugin-babel": "^3.1.0",
-    "eslint-plugin-react": "^3.16.1"
+    "eslint": "^2.8.0",
+    "eslint-plugin-babel": "^3.2.0",
+    "eslint-plugin-react": "^5.0.1"
   },
   "package-deps": [
     "go-config"
