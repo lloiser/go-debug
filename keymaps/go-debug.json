@@ -9,10 +9,10 @@
 		"f10":           "go-debug:next",
 		"f11":           "go-debug:step"
 	},
-	":not(.platform-darwin) atom-workspace": {
+	"body.platform-win32 atom-workspace, body.platform-linux atom-workspace": {
 		"ctrl-k ctrl-g": "go-debug:toggle-panel"
 	},
-	".platform-darwin atom-workspace": {
+	"body.platform-darwin atom-workspace": {
 		"cmd-k cmd-g": "go-debug:toggle-panel"
 	}
 }
