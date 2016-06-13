@@ -6,14 +6,10 @@ import { Provider, connect } from "react-redux";
 
 import { store } from "./store";
 import Message from "./output-message";
-import { copyToClipboard } from "./utils";
 
 const filterText = (t) => t[0].toUpperCase() + t.substr(1);
 
 class Output extends React.Component {
-	componentDidMount() {
-		copyToClipboard(ReactDOM.findDOMNode(this));
-	}
 	componentDidUpdate() {
 		this.refs.list.scrollTop = this.refs.list.scrollHeight;
 	}
@@ -41,7 +37,7 @@ class Output extends React.Component {
 					<span className="icon-x" title="Close"></span>
 				</button>
 			</div>
-			<div className="go-debug-output-list" ref="list" tabIndex={-1}>{items}</div>
+			<div className="go-debug-output-list native-key-bindings" ref="list" tabIndex={-1}>{items}</div>
 		</div>;
 	}
 }

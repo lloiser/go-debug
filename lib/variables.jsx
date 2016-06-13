@@ -1,14 +1,10 @@
 "use babel";
 
-import { React, ReactDOM } from "react-for-atom";
+import { React } from "react-for-atom";
 import { connect } from "react-redux";
-import { copyToClipboard } from "./utils";
 import * as Delve from "./delve";
 
 class Variables extends React.Component {
-	componentDidMount() {
-		copyToClipboard(ReactDOM.findDOMNode(this));
-	}
 	render() {
 		return <div onClick={this.onToggleClick.bind(this)}>
 			<Children variables={this.props.variables} path={""} expanded={this.props.expanded} />
@@ -58,7 +54,9 @@ const Variable = (props) => {
 	toggleClassName += " icon icon-chevron-" + (isExpanded ? "down" : "right");
 	return <li>
 		<span className={toggleClassName} data-path={path} />
-		{variable.value ? <span tabIndex={-1}>{name}: {renderValue(variable.value)}</span> : <span>{name}</span>}
+		{variable.value ?
+			<span tabIndex={-1} className="native-key-bindings">{name}: {renderValue(variable.value)}</span> :
+			<span tabIndex={-1} className="native-key-bindings">{name}</span>}
 		{isExpanded ? <Children variables={variables} path={path} expanded={expanded} /> : null}
 	</li>;
 };
