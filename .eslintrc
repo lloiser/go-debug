@@ -7,6 +7,7 @@
 		"indent": [2, "tab", { "SwitchCase": 1 }],
 		"new-cap": 2,
 		"no-console": 0,
+		"no-control-regex": 0,
 		"no-extra-parens": [2, "functions"],
 		"no-new-wrappers": 2,
 		"no-this-before-super": 2,

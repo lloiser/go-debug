@@ -8,26 +8,37 @@ import { store } from "./store";
 import Message from "./output-message";
 import { copyToClipboard } from "./utils";
 
+const filterText = (t) => t[0].toUpperCase() + t.substr(1);
+
 class Output extends React.Component {
 	componentDidMount() {
 		copyToClipboard(ReactDOM.findDOMNode(this));
 	}
 	componentDidUpdate() {
-		const listEl = ReactDOM.findDOMNode(this.refs.list);
-		listEl.scrollTop = listEl.scrollHeight;
+		this.refs.list.scrollTop = this.refs.list.scrollHeight;
 	}
 	render() {
-		const items = this.props.messages.map((msg, i) => {
-			return <Message key={i} message={msg.message} />;
-		});
+		const { filters } = this.props;
+		const items = this.props.messages
+			.filter((msg) => filters[msg.type])
+			.map((msg, i) => {
+				return <Message key={i} message={msg.message} />;
+			});
+		const filterKeys = Object.keys(filters).sort();
 		return <div className="go-debug-output">
 			<div className="go-debug-output-header">
 				<h5 className="text">Output messages</h5>
+				<div className="btn-group">
+					{filterKeys.map((filter) =>
+						<button key={filter} className={"btn" + (filters[filter] ? " selected" : "")}
+							onClick={this.props.onFilterClick} data-filter={filter}>{filterText(filter)}</button>
+					)}
+				</div>
 				<button type="button" className="btn go-debug-btn-flat" onClick={this.props.onCleanClick}>
-					<span className="icon-circle-slash" title="clean"></span>
+					<span className="icon-circle-slash" title="Clean"></span>
 				</button>
 				<button type="button" className="btn go-debug-btn-flat" onClick={this.props.onCloseClick}>
-					<span className="icon-x" title="close"></span>
+					<span className="icon-x" title="Close"></span>
 				</button>
 			</div>
 			<div className="go-debug-output-list" ref="list" tabIndex={-1}>{items}</div>
@@ -37,17 +48,21 @@ class Output extends React.Component {
 
 const OutputListener = connect(
 	(state) => {
-		return {
-			messages: state.output.messages
-		};
+		return state.output;
 	},
 	(dispatch) => {
 		return {
-			onCleanClick: () => {
+			onCleanClick() {
 				dispatch({ type: "CLEAN_OUTPUT" });
 			},
-			onCloseClick: () => {
+			onCloseClick() {
 				dispatch({ type: "TOGGLE_OUTPUT", visible: false });
+			},
+			onFilterClick(ev) {
+				const { filter } = ev.target.dataset;
+				if (filter) {
+					dispatch({ type: "TOGGLE_OUTPUT_FILTER", filter });
+				}
 			}
 		};
 	}
