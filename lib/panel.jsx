@@ -197,10 +197,10 @@ class Panel extends React.Component {
 				(dir) => dir.getFile(dir.relativize(file)).exists()
 			)
 		).then((results) => {
-			if (results.indexOf(true) === 0) {
-				return Promise.resolve();
+			if (results.indexOf(true) === -1) {
+				return Promise.reject();
 			}
-			return Promise.reject();
+			return Promise.resolve();
 		});
 	}
 
