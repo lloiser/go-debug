@@ -63,7 +63,7 @@ const Variable = (props) => {
 
 const Children = (props) => {
 	const { variables, path, expanded } = props;
-	const children = Object.keys(variables || {}).filter((p) => parentPath(p) === path).sort();
+	const children = Object.keys(variables || {}).filter((p) => variables[p].parentPath === path).sort();
 	if (!children.length) {
 		return <div />;
 	}
@@ -82,8 +82,4 @@ function renderValue(value) {
 		return value.className ? <span className={value.className}>{v}</span> : v;
 	}
 	return (value === undefined || value === null) ? "" : value;
-}
-
-function parentPath(p) {
-	return p.split(".").slice(0,-1).join(".");
 }
