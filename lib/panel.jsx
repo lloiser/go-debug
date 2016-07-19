@@ -68,6 +68,10 @@ class Panel extends React.Component {
 		return <div>
 			<input className="go-debug-panel-args native-key-bindings" value={this.props.args}
 				placeholder="arguments passed to delve after --" onChange={this.props.onArgsChange} />
+
+			<input className="go-debug-panel-args native-key-bindings" value={this.props.fileOverride}
+				placeholder="Insert a file to run instead of the current file (relative to project root)" onChange={this.props.onFileOverrideChange} />
+
 		</div>;
 	}
 
@@ -244,7 +248,8 @@ const PanelListener = connect(
 			goroutines: state.delve.goroutines,
 			breakpoints: state.delve.breakpoints,
 			selectedStacktrace: state.delve.selectedStacktrace,
-			selectedGoroutine: state.delve.selectedGoroutine
+			selectedGoroutine: state.delve.selectedGoroutine,
+			fileOverride: state.delve.fileOverride
 		};
 	},
 	(dispatch) => {
@@ -257,6 +262,9 @@ const PanelListener = connect(
 			},
 			onArgsChange: (ev) => {
 				dispatch({ type: "UPDATE_ARGS", args: ev.target.value });
+			},
+			onFileOverrideChange: (ev) => {
+				dispatch({ type: "UPDATE_FILE_OVERRIDE", fileOverride: ev.target.value });
 			}
 		};
 	}
