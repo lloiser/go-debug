@@ -23,15 +23,13 @@
     "adm-zip": "^0.4.7",
     "atom-package-deps": "^4.0.1",
     "json-rpc2": "^1.0.2",
-    "react-for-atom": "^15.0.2-1",
+    "react-for-atom": "^15.2.1-0",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
-    "request": "^2.72.0"
+    "request": "^2.74.0"
   },
   "devDependencies": {
-    "eslint": "^2.8.0",
-    "eslint-plugin-babel": "^3.2.0",
-    "eslint-plugin-react": "^5.0.1"
+    "standard": "^8.0.0-beta.4"
   },
   "package-deps": [
     "go-config"
@@ -61,5 +59,11 @@
       "type": "boolean",
       "default": true
     }
+  },
+  "standard": {
+    "globals": [
+      "atom",
+      "waitsForPromise"
+    ]
   }
 }
