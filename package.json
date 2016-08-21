@@ -55,10 +55,10 @@
       "default": false
     },
     "panelInitialVisible": {
-      "title": "Panel initially visible",
+      "title": "Panel Initially Visible",
       "description": "Determines whether the panel is initially visible for new atom instances or not.",
       "type": "boolean",
-      "default": true
+      "default": false
     }
   },
   "standard": {
