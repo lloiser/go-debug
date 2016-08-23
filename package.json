@@ -59,6 +59,12 @@
       "description": "Determines whether the panel is initially visible for new atom instances or not.",
       "type": "boolean",
       "default": false
+    },
+    "dlvPath": {
+      "title": "dlv path",
+      "description": "The path to a dlv executable to use.",
+      "type": "string",
+      "default": ""
     }
   },
   "standard": {
