@@ -17,24 +17,21 @@
   },
   "license": "MIT",
   "engines": {
-    "atom": ">=1.5.3 <2.0.0"
+    "atom": ">=1.9.9 <2.0.0"
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
+    "ansi-to-html": "^0.4.1",
     "atom-package-deps": "^4.0.1",
+    "chokidar": "^1.6.1",
+    "etch": "^0.8.0",
     "json-rpc2": "^1.0.2",
-    "react-for-atom": "^15.2.1-0",
-    "react-redux": "^4.4.5",
     "redux": "^3.5.2",
-    "request": "^2.74.0"
+    "request": "^2.78.0"
   },
   "devDependencies": {
-    "standard": "^8.0.0-beta.4"
+    "standard": "^8.5.0"
   },
-  "package-deps": [
-    "go-config",
-    "go-get"
-  ],
   "consumedServices": {
     "go-config": {
       "versions": {
@@ -43,34 +40,53 @@
     },
     "go-get": {
       "versions": {
-        "1.0.0": "consumeGoget"
+        "2.0.0": "consumeGoget"
+      }
+    }
+  },
+  "providedServices": {
+    "go-plus.view": {
+      "versions": {
+        "0.1.0": "provideGoPlusView"
       }
     }
   },
   "configSchema": {
-    "limitCommandsToGo": {
-      "title": "Commands available only in go source",
-      "description": "Determines whether the commands of this package are only available in go source files",
-      "type": "boolean",
-      "default": false
-    },
-    "panelInitialVisible": {
-      "title": "Panel Initially Visible",
-      "description": "Determines whether the panel is initially visible or not.",
-      "type": "boolean",
-      "default": false
+    "configurationFile": {
+      "title": "Configuration File",
+      "description": "Path to the configuration file. Separate multiple paths with commas",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "order": 1
     },
     "dlvPath": {
       "title": "dlv path",
       "description": "The path to a dlv executable to use.",
       "type": "string",
-      "default": ""
+      "default": "",
+      "order": 2
+    },
+    "limitCommandsToGo": {
+      "title": "Commands available only in go source",
+      "description": "Determines whether the commands of this package are only available in go source files or in all files.",
+      "type": "boolean",
+      "default": true,
+      "order": 3
+    },
+    "panelInitialVisible": {
+      "title": "Panel Initially Visible",
+      "description": "Determines whether the panel is initially visible or not.",
+      "type": "boolean",
+      "default": false,
+      "order": 4
     }
   },
   "standard": {
     "globals": [
-      "atom",
-      "waitsForPromise"
+      "atom"
     ]
   }
 }

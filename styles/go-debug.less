@@ -1,232 +1,227 @@
-// The ui-variables file is provided by base themes provided by Atom.
-//
-// See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
-// for a full listing of what's available.
 @import "ui-variables";
 
-@go-debug-debug-line-color-bg: rgba(64, 115, 255, 0.5);
+@go-debug-line-color-bg: rgba(64, 115, 255, 0.5);
 @go-debug-breakpoint-size: 0.8em;
-@go-debug-panel-size: 25em;
+@go-debug-panel-size: 20em;
 @go-debug-output-size: 20em;
 
-.go-debug-breakpoint {
-	display: inline-block;
-	height: @go-debug-breakpoint-size !important;
-	width: @go-debug-breakpoint-size;
-	border-radius: 50%;
-	border: 1px solid currentColor;
-	color: red;
-	&-state-busy {
-	}
-	&-state-valid {
-		background-color: currentColor;
-	}
-	&-state-invalid {
-		border-color: orange;
-		background-color: orange;
-	}
+button.go-debug-btn-flat {
+  border: none;
+  border-radius: 0;
+  background: none;
+  line-height: 2;
 }
 
-atom-text-editor::shadow {
-	.go-debug-gutter-breakpoint {
-		width: 100%;
-		display: flex;
-		align-items: center;
-		cursor: pointer;
-	}
-	.go-debug-breakpoint {
-		.go-debug-breakpoint;
-	}
+.go-debug-breakpoint {
+  display: inline-block;
+  height: @go-debug-breakpoint-size !important;
+  width: @go-debug-breakpoint-size;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  color: red;
+  &-state-busy {
+  }
+  &-state-valid {
+    background-color: currentColor;
+  }
+  &-state-invalid {
+    border-color: orange;
+    background-color: orange;
+  }
+}
 
-	.go-debug-debug-line {
-		background: @go-debug-debug-line-color-bg;
-	}
+atom-text-editor::shadow,
+atom-text-editor {
+  .go-debug-gutter-breakpoint {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .go-debug-breakpoint {
+  .go-debug-breakpoint;
+  }
+
+  .go-debug-line {
+    background: @go-debug-line-color-bg;
+  }
 }
 
 .go-debug-panel {
-	display: flex;
-	border-left: 1px solid @pane-item-border-color;
-}
-.go-debug-panel-root {
-	display: flex;
-	flex-direction: column;
-	flex: 1;
-	width: @go-debug-panel-size;
-	position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: @go-debug-panel-size;
+  position: relative;
+  border-left: 1px solid @tool-panel-border-color;
 }
 
 .go-debug-panel-resizer {
-	position: absolute;
-	top: 0; left: 0; bottom: 0;
-	width: 5px;
-	cursor: ew-resize;
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 5px;
+  cursor: col-resize;;
+}
+
+.go-debug-panel-header {
+  border-bottom: 1px solid @pane-item-border-color;
+  & > div {
+    display: flex;
+    height: 2.5em;
+    align-items: center;
+    & > * {
+      height: 100%;
+    }
+  }
+
+  select {
+    background: @tool-panel-background-color;
+    flex: 1;
+    border: 0;
+    cursor: pointer;
+  }
+}
+
+.go-debug-panel-title {
+  text-align: center;
+  margin: 1rem;
+}
+
+.go-debug-panel-no-debugger {
+  padding-left: 0.5em;
 }
 
 .go-debug-panel-commands {
-	display: flex;
-	flex-shrink: 0;
-	white-space: nowrap;
-	border-bottom: 1px solid @pane-item-border-color;
+  display: flex;
+  flex-shrink: 0;
+  white-space: nowrap;
 
-	> .btn {
-		flex: 1;
-	}
-}
-
-button.go-debug-btn-flat {
-	border: none;
-	border-radius: 0;
-	background: none;
-	min-height: 3em;
-}
-
-.go-debug-panel-args {
-	width: 100%;
-	margin-bottom: 0.5em;
-	background: @input-background-color;
-	border: 0;
-	border-bottom: 1px solid @input-border-color;
-	padding: 0.4em;
+  & > .btn {
+    flex: 1;
+  }
 }
 
 .go-debug-panel-content {
-	overflow: auto;
-	flex: 1;
+  overflow: auto;
+  flex: 1;
 }
 
 .go-debug-panel-showoutput {
-	flex-shrink: 0;
-	text-align: center;
+  flex-shrink: 0;
+  min-height: 3em;
+  text-align: center;
 }
 
 .go-debug-panel-stacktrace,
 .go-debug-panel-goroutines {
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	& > * {
-		padding: 0.2em 0.5em;
-		cursor: pointer;
-		&:nth-child(odd) {
-			background-color: rgba(0, 0, 0, 0.1);
-		}
-		&:hover {
-			background-color: rgba(0, 0, 0, 0.2);
-		}
-	}
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  & > * {
+    padding: 0.2em 0.5em;
+    cursor: pointer;
+    &:nth-child(odd) {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
 }
 
 .go-debug-panel-variables {
-	li {
-		padding: 0.1em 0;
-	}
-	ol {
-		overflow: visible;
-		margin: 0;
-		padding: 0 0.5em;
-		white-space: pre-line;
-		list-style: none;
-		ol {
-			padding-left: 1.5em;
-		}
-	}
+  li {
+    padding: 0.1em 0;
+    > div {
+      display: flex;
+    }
+  }
+  ol {
+    overflow: visible;
+    margin: 0;
+    padding: 0 0.5em;
+    white-space: pre;
+    list-style: none;
+    ol {
+      padding-left: 1.5em;
+    }
+  }
 }
 
 .go-debug-panel-breakpoints {
-	> * {
-		padding: 0.2em 0.5em 0;
-		cursor: pointer;
-		white-space: nowrap;
-		display: flex;
-		align-items: center;
-		> .icon-x::before {
-			height: auto;
-			width: auto;
-			margin-right: 0.3em;
-			flex-shrink: 0;
-			font-size: small;
-		}
-	}
-	.go-debug-breakpoint {
-		margin-right: 0.2em;
-		flex-shrink: 0;
-	}
+  & > * {
+    padding: 0.2em 0.5em 0;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    align-items: baseline;
+    & > .icon-x::before {
+      height: auto;
+      width: auto;
+      margin-right: 0.3em;
+      flex-shrink: 0;
+      font-size: small;
+    }
+  }
+  .go-debug-breakpoint {
+    margin-right: 0.2em;
+    flex-shrink: 0;
+  }
 }
 
-.go-debug-output-header {
-	display: flex;
-	padding-left: 0.5em;
-	align-items: center;
-	.text {
-		flex: 1;
-		margin: 0;
-	}
-}
+.go-debug-output {
+  flex: 1;
+  display: flex;
+  margin: -10px; /* revert padding of panel-body in go-plus */
 
-.go-debug-output-list {
-	max-height: @go-debug-output-size;
-	overflow: auto;
-	white-space: pre-line;
-	padding: 0.2em 0.5em;
+  .buttons {
+    flex-shrink: 0;
+    border-right: 1px solid @base-border-color;
+    > * {
+      min-width: 3em;
+      min-height: 3em;
+    }
+  }
+
+  .output {
+    flex: 1;
+    white-space: pre-wrap;
+    padding: 10px; /* same as in go-plus */
+    overflow: auto;
+    > * {
+      display: block;
+    }
+  }
 }
 
 .go-debug-expandable {
-	margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
 }
-
 .go-debug-expandable-header {
-	cursor: pointer;
-	border-bottom: 1px solid currentColor;
-	padding: 0.2em 0.5em;
-	font-weight: bold;
+  cursor: pointer;
+  border-bottom: 1px solid currentColor;
+  padding: 0.2em 0.5em;
+  font-weight: bold;
 }
-
 .go-debug-expandable-body {
-	overflow-x: auto;
+  overflow-x: auto;
 }
-
 .go-debug-expandable[data-expanded="false"] .go-debug-expandable-body{
-	display: none;
+  display: none;
 }
 
 .go-debug-toggle {
-	display: inline-block;
-	cursor: pointer;
-	text-align: center;
-	width: 1em;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  width: 1em;
+  flex-shrink: 0;
 
-	&::before {
-		width: auto;
-		height: auto;
-		font-size: inherit;
-	}
-	&.go-debug-toggle-hidden {
-		visibility: hidden;
-	}
-}
-
-.go-debug-busy {
-	background-color: rgba(0, 0, 0, 0.1);
-}
-
-.go-debug-busy-indicator {
-	display: inline-block;
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	height: 40px;
-	width: 6px;
-	background-color: currentColor;
-	animation: go-debug-busy-animation 1.2s infinite ease-in-out;
-	& > .r2 { animation-delay: -1.1s; }
-	& > .r3 { animation-delay: -1.0s; }
-	& > .r4 { animation-delay: -0.9s; }
-	& > .r5 { animation-delay: -0.8s; }
-}
-
-@keyframes go-debug-busy-animation {
-	0%, 40%, 100% {
-		transform: scaleY(0.4);
-	}  20% {
-		transform: scaleY(1.0);
-	}
+  &::before {
+    width: auto;
+    height: auto;
+    font-size: inherit;
+  }
+  &.go-debug-toggle-hidden {
+    visibility: hidden;
+  }
 }

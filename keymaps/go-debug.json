@@ -1,13 +1,13 @@
 {
 	"atom-workspace": {
-		"f5":            "go-debug:run-package",
-		"ctrl-f5":       "go-debug:run-tests",
+		"f5":            "go-debug:start",
 		"shift-f5":      "go-debug:restart",
 		"f6":            "go-debug:stop",
-		"f8":            "go-debug:continue",
+		"f8":            "go-debug:resume",
 		"f9":            "go-debug:toggle-breakpoint",
 		"f10":           "go-debug:next",
-		"f11":           "go-debug:step"
+		"f11":           "go-debug:stepIn",
+		"shift-f11":     "go-debug:stepOut"
 	},
 	"body.platform-win32 atom-workspace, body.platform-linux atom-workspace": {
 		"ctrl-k ctrl-g": "go-debug:toggle-panel"
