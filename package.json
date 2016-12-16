@@ -21,17 +21,20 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
-    "ansi-to-html": "^0.4.1",
-    "atom-package-deps": "^4.0.1",
+    "ansi-to-html": "^0.4.2",
+    "atom-package-deps": "^4.3.1",
     "chokidar": "^1.6.1",
     "etch": "^0.8.0",
     "json-rpc2": "^1.0.2",
-    "redux": "^3.5.2",
-    "request": "^2.78.0"
+    "redux": "^3.6.0",
+    "request": "^2.79.0"
   },
   "devDependencies": {
-    "standard": "^8.5.0"
+    "standard": "^8.6.0"
   },
+  "package-deps": [
+    "go-plus"
+  ],
   "consumedServices": {
     "go-config": {
       "versions": {
