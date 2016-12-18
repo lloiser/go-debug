@@ -21,7 +21,7 @@ If this fails you can still do it manually by using this guide: https://github.c
 * `Debug`: compile and debug the current package
 * `Test`: compile and debug the tests of the current package
 
-It's possible to create additional configurations by creating a file and setting the path in the `go-debug` setting `Configuration File`. You can even specify multiple configurations by separating the paths in this setting with commas. Relative paths will be resolved relative to the current open working directory.
+It's possible to create additional configurations by creating a file and setting the path in the `go-debug` setting `Configuration File`. You can even specify multiple configurations by separating the paths in this setting with commas. Relative paths will be resolved relative to the current project.
 
 Such a configuration file looks like:
 
@@ -56,15 +56,16 @@ Each configuration supports the following options:
   "env": { "<key>": "<value>" },
 
   // "cwd" specifies the current working directory where delve starts from.
-  // This is useful if you always want to debug/test a specific package (e.g. the "main" package") but are currently working on another package
+  // This is useful if you always want to debug/test a specific package (e.g. the "main" package) but are currently working on another package
   "cwd": "<dir>",
 
   // "host" and "port" are used to modify the default port of the locally running delve server.
-  // If "mode" is "remote" then these define the host and port of the server where delve is running.
+  // If "mode" is "remote" then these define the host and port of the server where a "headless" delve is running.
   "host": "localhost",
   "port": 2345,
 
   // "program" contains the path to a precompiled executable that should be debugged.
+  // (useful if you have a custom build chain like gb)
   "program": "<path>",
 
   // pass additional build flags when delve compiles the package/tests.
@@ -78,7 +79,7 @@ Each configuration supports the following options:
 }
 ```
 
-Almost all of these options can make use of the following variables by using `${}`:
+All string options can make use of the following variables by using `${...}` somewhere inside the string:
 
 ```js
 {
@@ -101,7 +102,7 @@ Almost all of these options can make use of the following variables by using `${
 }
 ```
 
-Note: `go-debug` also supports the configuration for vscode which are stored in `.vscode/launch.json`. But be aware that not all configurations might work!
+_Note: `go-debug` also supports the configuration for vscode which are stored in `.vscode/launch.json`. But be aware that not all configurations might work!_
 
 ### Examples
 
