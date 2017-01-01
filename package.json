@@ -89,7 +89,9 @@
   },
   "standard": {
     "globals": [
-      "atom"
+      "advanceClock",
+      "atom",
+      "waitsForPromise"
     ]
   }
 }
