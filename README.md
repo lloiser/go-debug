@@ -97,8 +97,9 @@ All string options can make use of the following variables by using `${...}` som
   relativeFile: "...",
   // the full path of the project root folder
   workspaceRoot: "...",
-  // this contains all environment variables known to atom including the "env" variables from above
-  env: { "<key>": "<value>"}
+  // this contains all environment variables known to atom including the "env" variables from above.
+  // They can be used like so "${env.GOPATH}/src/..."
+  env: { "<key>": "<value>" }
 }
 ```
 
@@ -111,7 +112,6 @@ Always debug the `cmd` of your program wherever you are right now in your code a
 {
   "name": "Debug cmd",
   "mode": "debug",
-
   "cwd": "${workspaceRoot}/cmd",
   "args": ["--connection=sql"],
   "env": {
