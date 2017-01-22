@@ -30,7 +30,6 @@ button.go-debug-btn-flat {
   }
 }
 
-atom-text-editor::shadow,
 atom-text-editor {
   .go-debug-gutter-breakpoint {
     width: 100%;
@@ -38,12 +37,9 @@ atom-text-editor {
     align-items: center;
     cursor: pointer;
   }
-  .go-debug-breakpoint {
-  .go-debug-breakpoint;
-  }
 
   .go-debug-line {
-    background: @go-debug-line-color-bg;
+    background: @go-debug-line-color-bg !important;
   }
 }
 
@@ -60,7 +56,7 @@ atom-text-editor {
   position: absolute;
   top: 0; left: 0; bottom: 0;
   width: 5px;
-  cursor: col-resize;;
+  cursor: col-resize;
 }
 
 .go-debug-panel-header {
@@ -209,7 +205,7 @@ atom-text-editor {
   display: none;
 }
 
-.go-debug-toggle {
+.go-debug-toggle.icon {
   display: inline-block;
   cursor: pointer;
   text-align: center;
