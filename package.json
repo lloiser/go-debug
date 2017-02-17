@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
-    "ansi-to-html": "^0.5.0",
+    "ansi-to-html": "^0.6.0",
     "atom-package-deps": "^4.3.1",
     "chokidar": "^1.6.1",
     "etch": "^0.8.0",
