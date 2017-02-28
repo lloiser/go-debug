@@ -1,7 +1,7 @@
 {
   "name": "go-debug",
   "main": "./lib/main",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "go debugger using delve for atom",
   "keywords": [
     "go",
