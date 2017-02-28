@@ -20,17 +20,17 @@
     "atom": ">=1.13.0 <2.0.0"
   },
   "dependencies": {
-    "ansi-to-html": "^0.5.0",
-    "atom-package-deps": "^4.3.1",
+    "ansi-to-html": "^0.6.0",
+    "atom-package-deps": "^4.4.1",
     "chokidar": "^1.6.1",
-    "etch": "^0.8.0",
+    "etch": "^0.9.0",
     "json-rpc2": "^1.0.2",
     "redux": "^3.6.0",
     "semver": "^5.3.0",
     "untildify": "^3.0.2"
   },
   "devDependencies": {
-    "standard": "^8.6.0"
+    "standard": "^9.0.0"
   },
   "package-deps": [
     "go-plus"
