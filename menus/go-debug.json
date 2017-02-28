@@ -1,0 +1,10 @@
+{
+  "context-menu": {
+    ".go-debug-breakpoint,.go-debug-panel-breakpoints > *[data-file]": [
+      {
+        "label": "Edit breakpoint condition",
+        "command": "go-debug:edit-breakpoint-condition"
+      }
+    ]
+  }
+}
