@@ -31,7 +31,7 @@
     "untildify": "^3.0.2"
   },
   "devDependencies": {
-    "standard": "^8.6.0"
+    "standard": "^9.0.0"
   },
   "package-deps": [
     "go-plus"
