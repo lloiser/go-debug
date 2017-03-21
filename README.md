@@ -10,7 +10,7 @@ Either `apm install go-debug` or search for `go-debug` in the settings.
 
 ### Install delve
 
-`go-debug` tries to install/download a delve automatically.
+`go-debug` tries to install/download delve automatically.
 
 If this fails you can still do it manually by using this guide: https://github.com/derekparker/delve/tree/master/Documentation/installation
 
@@ -139,7 +139,7 @@ Start tests with verbose flag:
 * `f9` toggle breakpoint
 * `f10` step over to next source line (`n / next`)
 * `f11` step into functions (`s / step`)
-* `f11` step out of functions (`stepOut`)
+* `shift-f11` step out of functions (`stepOut`)
 * `cmd-k cmd-g` (mac) / `ctrl-k ctrl-g` (others) toggles the main panel
 
 ## Links
