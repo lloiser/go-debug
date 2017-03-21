@@ -92,6 +92,12 @@
       "type": "boolean",
       "default": false,
       "order": 5
+    },
+    "saveAllFiles": {
+      "title": "Save all files before starting delve",
+      "type": "boolean",
+      "default": false,
+      "order": 6
     }
   },
   "standard": {
