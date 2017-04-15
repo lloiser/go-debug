@@ -177,30 +177,35 @@ atom-text-editor {
   flex: 1;
   display: flex;
   margin: -10px; /* revert padding of panel-body in go-plus */
+}
 
-  .buttons {
-    flex-shrink: 0;
-    border-right: 1px solid @base-border-color;
-    > * {
-      min-width: 3em;
-      min-height: 3em;
-    }
+.go-debug-output-sidebar {
+  flex-shrink: 0;
+  border-right: 1px solid @base-border-color;
+  > * {
+    min-width: 3em;
+    min-height: 3em;
   }
+}
+
+.go-debug-output-content {
+  flex: 1;
+  flex-direction: column;
+  display: flex;
 
   .output {
     flex: 1;
     white-space: pre-wrap;
     padding: 10px; /* same as in go-plus */
     overflow: auto;
-    > * {
-      display: block;
-    }
   }
 }
-.go-plus-panel.is-vertical .go-debug-output {
-  flex-direction: column;
+.go-plus-panel.is-vertical {
+  .go-debug-output {
+    flex-direction: column;
+  }
 
-  .buttons {
+  .go-debug-output-sidebar {
     border-right: 0;
     border-bottom: 1px solid @base-border-color;
   }
