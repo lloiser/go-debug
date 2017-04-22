@@ -1,5 +1,5 @@
 {
-  "atom-workspace, .go-debug-output": {
+  "atom-workspace, .go-debug-output, .go-debug-panel": {
     "f5":            "go-debug:start",
     "shift-f5":      "go-debug:restart",
     "f6":            "go-debug:stop",

@@ -118,6 +118,7 @@ atom-text-editor {
 }
 
 .go-debug-panel-variables {
+  padding: @component-padding / 4;
   li > div {
     display: flex;
     > .go-debug-icon {
@@ -127,11 +128,32 @@ atom-text-editor {
   ol {
     overflow: visible;
     margin: 0;
-    padding: 0 @component-padding / 3;
+    padding: 0;
     white-space: pre;
     list-style: none;
     ol {
       padding-left: @component-padding;
+    }
+  }
+}
+
+.go-debug-watch-expression-input {
+  display: flex;
+  padding: 0 0.2em;
+  > .go-debug-text-input {
+    flex: 1;
+  }
+}
+.go-debug-panel-watch-expressions-variables {
+  padding: @component-padding / 4;
+  overflow-x: auto;
+  > div {
+    display: flex;
+    > .go-debug-btn-flat {
+      align-self: flex-start;
+    }
+    > .go-debug-panel-variables {
+      flex: 1;
     }
   }
 }
@@ -157,6 +179,7 @@ atom-text-editor {
 .go-debug-panel-stacktrace,
 .go-debug-panel-goroutines,
 .go-debug-panel-variables,
+.go-debug-panel-watch-expressions,
 .go-debug-panel-breakpoints {
   &-empty {
     vertical-align: middle;
