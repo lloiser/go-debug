@@ -19,6 +19,9 @@
   "engines": {
     "atom": ">=1.17.0 <2.0.0"
   },
+  "activationHooks": [
+    "language-go:grammar-used"
+  ],
   "dependencies": {
     "ansi-to-html": "^0.6.2",
     "atom-package-deps": "^4.6.0",
