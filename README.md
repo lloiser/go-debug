@@ -126,7 +126,7 @@ Start tests with verbose flag:
 {
   "name": "Verbose Test",
   "mode": "test",
-  "args": ["-v"]
+  "args": ["-test.v"]
 }
 ```
 
