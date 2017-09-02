@@ -23,17 +23,17 @@
     "language-go:grammar-used"
   ],
   "dependencies": {
-    "ansi-to-html": "^0.6.2",
+    "ansi-to-html": "^0.6.3",
     "atom-package-deps": "^4.6.0",
     "chokidar": "^1.7.0",
-    "etch": "^0.12.4",
+    "etch": "^0.12.6",
     "json-rpc2": "^1.0.2",
-    "redux": "^3.7.0",
-    "semver": "^5.3.0",
+    "redux": "^3.7.2",
+    "semver": "^5.4.1",
     "untildify": "^3.0.2"
   },
   "devDependencies": {
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   },
   "package-deps": [
     "go-plus"
