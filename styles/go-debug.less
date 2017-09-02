@@ -66,7 +66,6 @@ atom-text-editor {
 }
 
 .go-debug-panel-configs {
-  height: 3em;
   display: flex;
   align-items: stretch;
   & > * {
@@ -85,13 +84,17 @@ atom-text-editor {
 }
 
 .go-debug-panel-commands {
-  height: 3em;
   display: flex;
   flex-shrink: 0;
   white-space: nowrap;
   & > .btn {
     flex: 1;
   }
+}
+
+.go-debug-panel-configs, .go-debug-panel-commands {
+  height: 3em;
+  border-bottom: 1px solid @base-border-color;
 }
 
 .go-debug-panel-content {
@@ -233,7 +236,6 @@ atom-text-editor {
 .go-debug-expandable-header.panel-heading {
   padding: @component-padding / 2;
   background-color: @tool-panel-background-color;
-  border-top: 1px solid @base-border-color;
   border-bottom: 1px solid @base-border-color;
   cursor: pointer;
   font-size: inherit;
@@ -248,9 +250,9 @@ atom-text-editor {
   .go-debug-expandable-body {
     display: none;
   }
-  & + .go-debug-expandable > .go-debug-expandable-header {
-    border-top: 0;
-  }
+}
+.go-debug-expandable[data-expanded="true"] + .go-debug-expandable .go-debug-expandable-header {
+  border-top: 1px solid @base-border-color;
 }
 
 .go-debug-icon.icon {
