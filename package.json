@@ -23,7 +23,7 @@
     "language-go:grammar-used"
   ],
   "dependencies": {
-    "ansi-to-html": "^0.6.3",
+    "ansi-to-html": "^0.6.4",
     "atom-package-deps": "^4.6.0",
     "chokidar": "^1.7.0",
     "etch": "^0.12.6",
