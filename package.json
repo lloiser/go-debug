@@ -25,7 +25,7 @@
   "dependencies": {
     "ansi-to-html": "^0.6.3",
     "atom-package-deps": "^4.6.0",
-    "etch": "^0.12.6",
+    "etch": "^0.14.0",
     "json-rpc2": "^1.0.2",
     "redux": "^3.7.2",
     "semver": "^5.4.1",
