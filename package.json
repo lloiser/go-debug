@@ -1,7 +1,7 @@
 {
   "name": "go-debug",
   "main": "./lib/main",
-  "version": "1.5.2",
+  "version": "1.6.1",
   "description": "go debugger using delve for atom",
   "keywords": [
     "go",
@@ -32,7 +32,7 @@
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
-    "chokidar": "^1.7.0",
+    "eslint-plugin-flowtype": "^2.46.3",
     "etch": "^0.12.7",
     "json-rpc2": "^1.0.2",
     "redux": "^3.7.2",
@@ -40,19 +40,18 @@
     "untildify": "^3.0.2"
   },
   "devDependencies": {
-    "babel-eslint": "^8.0.1",
-    "eslint": "^3.19.0",
-    "eslint-config-standard": "^10.2.1",
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.15.0",
+    "eslint-config-standard": "^11.0.0",
     "eslint-config-standard-flow": "^1.0.1",
-    "eslint-config-standard-jsx": "^4.0.2",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-react": "^7.5.1",
+    "eslint-config-standard-jsx": "^5.0.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-react": "^7.7.0",
     "eslint-plugin-standard": "^3.0.1",
-    "flow-bin": "^0.59.0",
-    "flow-typed": "^2.2.0",
-    "standard": "^10.0.3"
+    "flow-bin": "^0.69.0",
+    "flow-typed": "^2.2.0"
   },
   "package-deps": [
     "go-plus"
