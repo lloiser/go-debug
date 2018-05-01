@@ -1,4 +1,4 @@
-// NOTE: copy of https://github.com/facebook-atom/atom-ide-ui/blob/1b7542997cd5cb58c1e986bef2192c49defb45a0/flow-libs/atom.js.flow
+// NOTE: copy of https://github.com/facebook-atom/atom-ide-ui/blob/c9834c1036de7076cd767090a19361d57181b0c1/flow-libs/atom.js.flow
 
 type IDisposable = {
   dispose(): mixed,
@@ -50,6 +50,13 @@ type atom$Octicon = 'alert' | 'alignment-align' | 'alignment-aligned-to' | 'alig
 
 type atom$PaneLocation = 'left' | 'right' | 'bottom' | 'center';
 
+declare type atom$Color  = {
+  // Returns a String in the form '#abcdef'.
+  toHexString(): string;
+  // Returns a String in the form 'rgba(25, 50, 75, .9)'.
+  toRGBAString(): string;
+}
+
 declare class atom$Model {
   destroy(): void,
   isDestroyed(): boolean,
@@ -69,6 +76,7 @@ declare class atom$Package {
   onDidDeactivate(cb: () => mixed): IDisposable,
   activateNow(): void,
   // Undocumented
+  bundledPackage: boolean,
   getCanDeferMainModuleRequireStorageKey(): string,
 }
 
@@ -134,7 +142,7 @@ type atom$ConfigSchema = {
   type: Array<atom$ConfigType> | atom$ConfigType,
 };
 
-  declare class atom$Config {
+declare class atom$Config {
   // Config Subscription
   observe(
     keyPath: string,
@@ -235,12 +243,23 @@ declare class atom$DisplayMarkerLayer {
   destroy(): void,
   clear(): void,
   isDestroyed(): boolean,
-  markBufferRange(range: atom$Range | atom$RangeLike, options: MarkerOptions): atom$Marker,
+  markBufferPosition(position: atom$PointLike, options?: MarkerOptions): atom$Marker,
+  markBufferRange(range: atom$Range | atom$RangeLike, options?: MarkerOptions): atom$Marker,
+  findMarkers(options: MarkerOptions): Array<atom$Marker>,
   getMarkers(): Array<atom$Marker>,
+}
+
+declare class atom$LayerDecoration {
+  destroy(): void,
+  isDestroyed(): boolean,
+  getProperties(): Object,
+  setProperties(properties: mixed): void,
+  setPropertiesForMarker(marker: atom$Marker, properties: mixed): void,
 }
 
 declare class atom$Disposable {
   constructor(disposalAction?: (...args: Array<any>) => any): void,
+  disposed: boolean,
   dispose(): void,
 }
 
@@ -268,24 +287,26 @@ declare class atom$Gutter {
   onDidDestroy(callback: () => void): IDisposable,
 }
 
+declare type atom$MarkerChangeEvent = {
+  oldHeadScreenPosition: atom$Point,
+  newHeadScreenPosition: atom$Point,
+  oldTailScreenPosition: atom$Point,
+  newTailScreenPosition: atom$Point,
+
+  oldHeadBufferPosition: atom$Point,
+  newHeadBufferPosition: atom$Point,
+  oldTailBufferPosition: atom$Point,
+  newTailBufferPosition: atom$Point,
+
+  isValid: boolean,
+  textChanged: boolean,
+}
+
 declare class atom$Marker {
   destroy(): void,
   getBufferRange(): atom$Range,
   getStartBufferPosition(): atom$Point,
-  onDidChange(callback: (event: {
-    oldHeadScreenPosition: atom$Point,
-    newHeadScreenPosition: atom$Point,
-    oldTailScreenPosition: atom$Point,
-    newTailScreenPosition: atom$Point,
-
-    oldHeadBufferPosition: atom$Point,
-    newHeadBufferPosition: atom$Point,
-    oldTailBufferPosition: atom$Point,
-    newTailBufferPosition: atom$Point,
-
-    isValid: boolean,
-    textChanged: boolean,
-  }) => void): IDisposable,
+  onDidChange(callback: (event: atom$MarkerChangeEvent) => mixed): IDisposable,
   isValid(): boolean,
   isDestroyed(): boolean,
   onDidDestroy(callback: () => mixed): IDisposable,
@@ -311,6 +332,8 @@ type atom$PackageMetadata = {
 };
 
 declare class atom$PackageManager {
+  +initialPackagesActivated: boolean,
+
   // Event Subscription
   onDidLoadInitialPackages(callback: () => void): IDisposable,
   onDidActivateInitialPackages(callback: () => void): IDisposable,
@@ -397,6 +420,12 @@ type atom$PaneSplitSide = 'before' | 'after';
 // Undocumented class
 declare class atom$applicationDelegate {
   focusWindow(): Promise<mixed>,
+  open(params: {
+    pathsToOpen: Array<string>,
+    newWindow?: boolean,
+    devMode?: boolean,
+    safeMode?: boolean,
+  }): void,
 }
 
 type atom$PaneParams = {
@@ -452,6 +481,8 @@ declare class atom$Pane {
 
   // Undocumented Methods
   constructor(params: atom$PaneParams): atom$Pane,
+  getPendingItem(): atom$PaneItem,
+  setPendingItem(item: atom$PaneItem): void,
   clearPendingItem(): void,
   getFlexScale(): number,
   getParent(): Object,
@@ -469,10 +500,12 @@ declare interface atom$PaneItem {
   +getTitle: () => string,
   +getLongTitle?: () => string,
   +getIconName?: () => string,
-  +getURI?: () => string,
+  +getURI?: () => ?string,
   +onDidChangeIcon?: (cb: (icon: string) => void) => IDisposable,
   +onDidChangeTitle?: (cb: (title: string) => void) => IDisposable,
+  +onDidTerminatePendingState?: (() => mixed) => IDisposable;
   +serialize?: () => Object,
+  +terminatePendingState?: () => void,
 }
 
 // Undocumented class
@@ -587,6 +620,7 @@ declare class atom$Range {
   serialize(): Array<Array<number>>,
   translate(startDelta: atom$PointLike, endDelta?: atom$PointLike): atom$Range,
   getRowCount(): number,
+  getRows(): Array<number>,
 }
 
 type RawStatusBarTile = {
@@ -733,14 +767,14 @@ type ChangeCursorPositionEvent = {
   cursor: atom$Cursor,
 };
 
-type MarkerOptions = {|
+type MarkerOptions = {
   reversed?: boolean,
   tailed?: boolean,
   invalidate?: 'never' | 'surround' | 'overlap' | 'inside' | 'touch',
   exclusive?: boolean,
-|};
+};
 
-type ChangeSelectionRangeEvent = {|
+type atom$ChangeSelectionRangeEvent = {|
   oldBufferRange: atom$Range,
   oldScreenRange: atom$Range,
   newBufferRange: atom$Range,
@@ -755,7 +789,7 @@ declare class atom$TextEditor extends atom$Model {
   // Event Subscription
   onDidChange(callback: () => void): IDisposable,
   onDidChangePath(callback: (newPath: string) => mixed): IDisposable,
-  onDidStopChanging(callback: () => void): IDisposable,
+  onDidStopChanging(callback: () => mixed): IDisposable,
   onDidChangeCursorPosition(callback: (event: ChangeCursorPositionEvent) => mixed):
     IDisposable,
   onDidDestroy(callback: () => mixed): IDisposable,
@@ -767,7 +801,7 @@ declare class atom$TextEditor extends atom$Model {
   // Note that the range property of the event is undocumented.
   onDidInsertText(callback: (event: {text: string, range: atom$Range}) => mixed): IDisposable,
   onDidChangeSoftWrapped(callback: (softWrapped: boolean) => mixed): IDisposable,
-  onDidChangeSelectionRange(callback: (event: ChangeSelectionRangeEvent) => mixed): IDisposable,
+  onDidChangeSelectionRange(callback: (event: atom$ChangeSelectionRangeEvent) => mixed): IDisposable,
   observeSelections(callback: (selection: atom$Selection) => mixed): IDisposable,
 
   // File Details
@@ -787,6 +821,9 @@ declare class atom$TextEditor extends atom$Model {
   setEncoding(encoding: string): void,
   getTabLength() : number,
   getSoftTabs(): boolean,
+  getIconName(): string,
+  onDidChangeIcon(cb: (icon: string) => void): IDisposable,
+  onDidChangeTitle(cb: (title: string) => void): IDisposable,
 
   // File Operations
   save(): Promise<void>,
@@ -797,11 +834,12 @@ declare class atom$TextEditor extends atom$Model {
   getText(): string,
   getTextInBufferRange(range: atom$RangeLike): string,
   getLineCount(): number,
+  getLastScreenRow(): number,
 
   // Mutating Text
   setText(text: string, options?: InsertTextOptions): void,
   setTextInBufferRange(
-    range: atom$Range | Array<atom$Point>,
+    range: atom$RangeLike,
     text: string,
     options?: {
       normalizeLineEndings?: boolean,
@@ -809,6 +847,7 @@ declare class atom$TextEditor extends atom$Model {
     },
   ): atom$Range,
   insertText(text: string): Array<atom$Range> | false,
+  mutateSelectedText(fn: (selection: atom$Selection, index: number) => void): void,
   delete: () => void,
   backspace: () => void,
   duplicateLines: () => void,
@@ -816,8 +855,10 @@ declare class atom$TextEditor extends atom$Model {
   // History
   createCheckpoint(): atom$TextBufferCheckpoint,
   revertToCheckpoint(checkpoint: atom$TextBufferCheckpoint): boolean,
+  terminatePendingState(): void,
   transact(fn: () => mixed, _: void): void,
   transact(groupingInterval: number, fn: () => mixed): void,
+  onDidTerminatePendingState(() => mixed): IDisposable;
 
   // TextEditor Coordinates
   screenPositionForBufferPosition(
@@ -843,6 +884,10 @@ declare class atom$TextEditor extends atom$Model {
 
   // Decorations
   decorateMarker(marker: atom$Marker, decorationParams: DecorateMarkerParams): atom$Decoration,
+  decorateMarkerLayer(
+    markerLayer: atom$DisplayMarkerLayer,
+    decorationParams: DecorateMarkerParams,
+  ): atom$LayerDecoration,
   decorationsForScreenRowRange(
     startScreenRow: number,
     endScreenRow: number,
@@ -850,11 +895,14 @@ declare class atom$TextEditor extends atom$Model {
   getDecorations(options?: {class?: string, type?: string}): Array<atom$Decoration>,
 
   // Markers
+  addMarkerLayer(): atom$DisplayMarkerLayer,
   getDefaultMarkerLayer(): atom$DisplayMarkerLayer,
   markBufferPosition(position: atom$PointLike, options?: MarkerOptions): atom$Marker,
   markBufferRange(range: atom$RangeLike, options?: MarkerOptions): atom$Marker,
   markScreenRange(range: atom$RangeLike, options?: MarkerOptions): atom$Marker,
   markScreenPosition(position: atom$PointLike, options?: MarkerOptions): atom$Marker,
+  findMarkers(options: MarkerOptions): Array<atom$Marker>,
+  getMarkerCount(): number,
 
   // Cursors
   getCursors(): Array<atom$Cursor>,
@@ -947,8 +995,10 @@ declare class atom$TextEditor extends atom$Model {
 
   // Clipboard Operations
   pasteText: (options?: Object) => void,
+  copySelectedText: () => void,
 
   // Managing Syntax Scopes
+  getRootScopeDescriptor(): atom$ScopeDescriptor,
   scopeDescriptorForBufferPosition(
     bufferPosition: atom$PointLike,
   ): atom$ScopeDescriptor,
@@ -999,9 +1049,10 @@ declare class atom$TextEditor extends atom$Model {
   moveToTop(): void,
   tokenForBufferPosition(position: atom$Point | [?number, ?number]): atom$Token,
   onDidConflict(callback: () => void): IDisposable,
-  serialize: () => mixed,
+  serialize(): Object,
   foldBufferRowRange(startRow: number, endRow: number): void,
-  getNonWordCharacters(scope?: atom$ScopeDescriptor): string,
+  getNonWordCharacters(position?: atom$PointLike): string,
+  scheduleComponentUpdate(): void,
 }
 
 /**
@@ -1029,6 +1080,11 @@ declare class atom$TextEditorComponent {
   invalidateBlockDecorationDimensions(decoration: atom$Decoration): void,
   element: atom$TextEditorElement,
   didFocus(): void,
+  setScrollTop(scrollTop: number): void,
+  getScrollTop(): number,
+
+  setScrollLeft(scrollLeft: number): void,
+  getScrollLeft(): number,
 }
 
 /**
@@ -1240,6 +1296,8 @@ declare class atom$Workspace {
   addTopPanel(options: atom$WorkspaceAddPanelOptions): atom$Panel,
   getModalPanels(): Array<atom$Panel>,
   addModalPanel(options: atom$WorkspaceAddPanelOptions): atom$Panel,
+  getHeaderPanels(): Array<atom$Panel>,
+  addHeaderPanel(options: atom$WorkspaceAddPanelOptions): atom$Panel,
 
   getLeftDock(): atom$Dock,
   getRightDock(): atom$Dock,
@@ -1496,6 +1554,8 @@ declare class atom$GrammarRegistry {
   removeGrammarForScopeName(scopeName: string): ?atom$Grammar,
   loadGrammarSync(grammarPath: string): atom$Grammar,
   selectGrammar(filePath: string, fileContents: string): atom$Grammar,
+  autoAssignLanguageMode(buffer: atom$TextBuffer): void,
+  assignLanguageMode(buffer: atom$TextBuffer, languageId: string): void,
 
   // Private API
   clear(): IDisposable,
@@ -1557,6 +1617,7 @@ declare class atom$KeymapManager {
 
   // Adding and Removing Bindings
   add(source: string, bindings: Object): IDisposable,
+  removeBindingsFromSource(source: string): void,
 
   // Accessing Bindings
   getKeyBindings(): Array<atom$KeyBinding>,
@@ -1600,14 +1661,22 @@ declare class atom$Project {
   onDidChangePaths(callback: (projectPaths: Array<string>) => mixed): IDisposable,
   onDidAddBuffer(callback: (buffer: atom$TextBuffer) => mixed): IDisposable,
   observeBuffers(callback: (buffer: atom$TextBuffer) => mixed): IDisposable,
-
+  replace?: (newSettings: {|
+    originPath?: string,
+    paths?: Array<string>,
+    config?: {[string]: mixed}
+  |}) => void,
   // Accessing the git repository
   getRepositories(): Array<?atom$Repository>,
   repositoryForDirectory(directory: atom$Directory): Promise<?atom$Repository>,
 
   // Managing Paths
   getPaths(): Array<string>,
-  addPath(projectPath: string): void,
+  addPath(projectPath: string, options?: {
+    emitEvent?: boolean,
+    exact?: boolean,
+    mustExist?: boolean,
+  }): void,
   setPaths(paths: Array<string>): void,
   removePath(projectPath: string): void,
   getDirectories(): Array<atom$Directory>,
@@ -1646,6 +1715,10 @@ type atom$TextEditEvent = {
 type atom$AggregatedTextEditEvent = {
   changes: Array<atom$TextEditEvent>,
 };
+
+declare class atom$LanguageMode {
+  getLanguageId(): string,
+}
 
 declare class atom$TextBuffer {
   constructor(text?: string): atom$TextBuffer,
@@ -1688,6 +1761,7 @@ declare class atom$TextBuffer {
   getEncoding(): string,
   getUri(): string,
   getId(): string,
+  getLanguageMode(): atom$LanguageMode,
 
   // Reading Text
   isEmpty(): boolean,
@@ -1808,6 +1882,7 @@ declare class atom$NotificationManager {
   addWarning(message: string, options?: atom$NotificationOptions): atom$Notification,
   addError(message: string, options?: atom$NotificationOptions): atom$Notification,
   addFatalError(message: string, options?: atom$NotificationOptions): atom$Notification,
+  addNotification(notification: atom$Notification): atom$Notification,
 
   // Getting Notifications
   getNotifications(): Array<atom$Notification>,
@@ -1829,6 +1904,7 @@ declare module 'atom' {
   declare var Range: typeof atom$Range;
   declare var TextBuffer: typeof atom$TextBuffer;
   declare var TextEditor: typeof atom$TextEditor;
+  declare var watchPath: (rootPath: string, options: Object, eventCallback: (events: Array<Object>) => void) => any;
 }
 
 // Make sure that common types can be referenced without the `atom$` prefix
@@ -1988,6 +2064,7 @@ type atom$AutocompleteSuggestion = {
   className?: ?string,
   iconHTML?: ?string,
   description?: ?string,
+  descriptionMarkdown?: ?string,
   descriptionMoreURL?: ?string,
 };
 
@@ -2003,19 +2080,25 @@ type atom$AutocompleteProvider = {
   +selector: string,
   +getSuggestions: (
     request: atom$AutocompleteRequest,
-  ) => Promise<?Array<atom$AutocompleteSuggestion>>,
-  +onDidInsertSuggestion?: (
-    insertedSuggestion: atom$SuggestionInsertedRequest,
-  ) => void,
+  ) => Promise<?Array<atom$AutocompleteSuggestion>> | ?Array<atom$AutocompleteSuggestion>,
+  +getSuggestionDetailsOnSelect?: (
+    suggestion: atom$AutocompleteSuggestion
+  ) => Promise<?atom$AutocompleteSuggestion>,
   +disableForSelector?: string,
   +inclusionPriority?: number,
   +excludeLowerPriority?: boolean,
+  +suggestionPriority?: number,
+  +filterSuggestions?: boolean,
+  +disposable?: () => void,
+  +onDidInsertSuggestion?: (
+    insertedSuggestion: atom$SuggestionInsertedRequest,
+  ) => void,
 };
 
 type atom$SuggestionInsertedRequest = {
-  editor: atom$TextEditor,
-  triggerPosition: atom$Point,
-  suggestion: atom$AutocompleteSuggestion,
+  +editor: atom$TextEditor,
+  +triggerPosition: atom$Point,
+  +suggestion: atom$AutocompleteSuggestion,
 };
 
 // Undocumented API.
@@ -2027,6 +2110,7 @@ declare class atom$Token {
 declare class atom$Selection {
   clear(): void,
   getText(): string,
+  getBufferRange(): atom$Range,
   insertText(
     text: string,
     options?: {

@@ -13,4 +13,8 @@ module.use_strict=true
 
 [lints]
 all=warn
-untyped-type-import=error
+untyped-import=off
+untyped-type-import=off
+unclear-type=off
+sketchy-null=error
+sketchy-null-bool=off
