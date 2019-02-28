@@ -17,7 +17,7 @@ If this fails you can still do it manually by using this guide: https://github.c
 ## Usage
 Use F5 to launch the debug window (the one on the right).
 At selected line press F9 to set (or toggle) break point.
-other [other function keys](#key-bindings).
+other [function keys](#key-bindings).
 
 ## Configuration
 
