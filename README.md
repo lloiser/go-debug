@@ -14,6 +14,11 @@ Either `apm install go-debug` or search for `go-debug` in the settings.
 
 If this fails you can still do it manually by using this guide: https://github.com/derekparker/delve/tree/master/Documentation/installation
 
+## Usage
+Use F5 to launch the debug window (the one on the right).
+At selected line press F9 to set (or toggle) break point.
+other [function keys](#key-bindings).
+
 ## Configuration
 
 `go-debug` has two built-in configurations. Both work on the file/package that is currently open in atom.
