@@ -15,9 +15,9 @@ Either `apm install go-debug` or search for `go-debug` in the settings.
 If this fails you can still do it manually by using this guide: https://github.com/derekparker/delve/tree/master/Documentation/installation
 
 ## Usage
-Use F5 to lauch the debug window (the one on the right).
-At selected line press F9 to set (or togle) break point.
-other [other function keys](#keys).
+Use F5 to launch the debug window (the one on the right).
+At selected line press F9 to set (or toggle) break point.
+other [other function keys](#key-bindings).
 
 ## Configuration
 
@@ -136,7 +136,6 @@ Start tests with verbose flag:
 ```
 
 ## Key bindings
-<a name="keys"></a>
 
 * `f5` starts the current selected configuration
 * `shift-f5` restarts the current delve session (`r / restart`)
