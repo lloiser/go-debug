@@ -28,7 +28,7 @@
     "etch": "^0.12.6",
     "json-rpc2": "^1.0.2",
     "redux": "^3.7.2",
-    "semver": "^5.4.1",
+    "semver": "^7.3.2",
     "untildify": "^3.0.2"
   },
   "devDependencies": {
